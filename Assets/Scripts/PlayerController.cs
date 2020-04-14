@@ -126,7 +126,6 @@ public class PlayerController : MonoBehaviour
                 SlideMovement();
                 break;
             case Status.climbingLadder:
-                Debug.Log("I AM AT A LADDER!");
                 LadderMovement();
                 break;
             case Status.grabbedLedge:
@@ -176,7 +175,7 @@ public class PlayerController : MonoBehaviour
             slideTime = 0;
         }
 
-        movement.Move(-slideDir, movement.slideSpeed, 1f);
+        movement.Move(slideDir, movement.slideSpeed, 1f);
         if (slideTime <= 0)
         {
             if (playerInput.crouching)
@@ -189,7 +188,7 @@ public class PlayerController : MonoBehaviour
     void CheckSliding()
     {
         //Check to slide when running
-        if(playerInput.crouch && canSlide())
+        if (playerInput.crouch && canSlide())
         {
             slideDir = transform.forward;
             movement.controller.height = halfheight;
@@ -204,7 +203,7 @@ public class PlayerController : MonoBehaviour
             slideTime -= Time.deltaTime;
         }
 
-        if (Physics.Raycast(transform.position, -Vector3.up, out var hit, rayDistance))
+        if (Physics.Raycast(transform.position, Vector3.up, out var hit, rayDistance))
         {
             float angle = Vector3.Angle(hit.normal, Vector3.up);
             if (angle > slideLimit && movement.moveDirection.y < 0)
@@ -232,7 +231,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!movement.grounded || (int)status > 2) return;
 
-        if(playerInput.crouch)
+        if (playerInput.crouch)
         {
             if (status != Status.crouching)
                 Crouch();
@@ -340,7 +339,7 @@ public class PlayerController : MonoBehaviour
 
         if (wall == 0) return;
 
-        if(Physics.Raycast(transform.position + (transform.right * wall * radius), transform.right * wall, out var hit, halfradius, wallrunLayer))
+        if (Physics.Raycast(transform.position + (transform.right * wall * radius), transform.right * wall, out var hit, halfradius, wallrunLayer))
         {
             wallDir = wall;
             wallNormal = Vector3.Cross(hit.normal, Vector3.up) * -wallDir;
@@ -442,7 +441,7 @@ public class PlayerController : MonoBehaviour
         Vector3 localPos = vaultHelper.transform.InverseTransformPoint(transform.position);
         Vector3 move = (vaultDir + (Vector3.up * -(localPos.z - radius) * height)).normalized;
 
-        if(localPos.z > halfheight)
+        if (localPos.z > halfheight)
         {
             movement.controller.height = height;
             status = Status.moving;
@@ -457,14 +456,14 @@ public class PlayerController : MonoBehaviour
 
         float checkDis = 0.05f;
         checkDis += (movement.controller.velocity.magnitude / 16f); //Check farther if moving faster
-        if(hasObjectInfront(checkDis, vaultLayer) && playerInput.Jump())
+        if (hasObjectInfront(checkDis, vaultLayer) && playerInput.Jump())
         {
             if (Physics.SphereCast(transform.position + (transform.forward * (radius - 0.25f)), 0.25f, transform.forward, out var sphereHit, checkDis, vaultLayer))
             {
                 if (Physics.SphereCast(sphereHit.point + (Vector3.up * halfheight), radius, Vector3.down, out var hit, halfheight - radius, vaultLayer))
                 {
                     //Check above the point to make sure the player can fit
-                    if (Physics.SphereCast(hit.point + (Vector3.up * radius), radius, Vector3.up, out var trash, height-radius))
+                    if (Physics.SphereCast(hit.point + (Vector3.up * radius), radius, Vector3.up, out var trash, height - radius))
                         return; //If cannot fit the player then do not vault
 
                     vaultOver = hit.point;
