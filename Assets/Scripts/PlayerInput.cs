@@ -48,6 +48,11 @@ public class PlayerInput : MonoBehaviour
         get { return Input.GetKey(KeyCode.C); }
     }
 
+    public bool leftClick
+    {
+        get { return Input.GetMouseButtonDown(0); }
+    }
+
     private Vector2 previous;
     private Vector2 _down;
 
