@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    Vector2 _mouseAbsolute;
-    Vector2 _smoothMouse;
+    Vector2 mouseAbsolute;
+    Vector2 smoothMouse;
 
     public GameObject characterBody;
 
@@ -27,7 +27,9 @@ public class CameraMovement : MonoBehaviour
 
         // Set target direction for the character body to its inital state.
         if (characterBody)
+        {
             targetCharacterDirection = characterBody.transform.localRotation.eulerAngles;
+        }
     }
 
     void Update()
@@ -45,32 +47,35 @@ public class CameraMovement : MonoBehaviour
         mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x, sensitivity.y * smoothing.y));
 
         // Interpolate mouse movement over time to apply smoothing delta.
-        _smoothMouse.x = Mathf.Lerp(_smoothMouse.x, mouseDelta.x, 1f / smoothing.x);
-        _smoothMouse.y = Mathf.Lerp(_smoothMouse.y, mouseDelta.y, 1f / smoothing.y);
+        smoothMouse.x = Mathf.Lerp(smoothMouse.x, mouseDelta.x, 1f / smoothing.x);
+        smoothMouse.y = Mathf.Lerp(smoothMouse.y, mouseDelta.y, 1f / smoothing.y);
 
         // Find the absolute mouse movement value from point zero.
-        _mouseAbsolute += _smoothMouse;
+        mouseAbsolute += smoothMouse;
 
         // Clamp and apply the local x value first, so as not to be affected by world transforms.
         if (clampInDegrees.x < 360)
-            _mouseAbsolute.x = Mathf.Clamp(_mouseAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
+        {
+            mouseAbsolute.x = Mathf.Clamp(mouseAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
+        }
 
         // Then clamp and apply the global y value.
         if (clampInDegrees.y < 360)
-            _mouseAbsolute.y = Mathf.Clamp(_mouseAbsolute.y, -clampInDegrees.y * 0.5f, clampInDegrees.y * 0.5f);
+        {
+            mouseAbsolute.y = Mathf.Clamp(mouseAbsolute.y, -clampInDegrees.y * 0.5f, clampInDegrees.y * 0.5f);
+        }
 
-        transform.localRotation = Quaternion.AngleAxis(-_mouseAbsolute.y, targetOrientation * Vector3.right) * targetOrientation;
+        transform.localRotation = Quaternion.AngleAxis(-mouseAbsolute.y, targetOrientation * Vector3.right) * targetOrientation;
 
         // If there's a character body that acts as a parent to the camera
         if (characterBody)
         {
-            var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, Vector3.up);
-            characterBody.transform.localRotation = yRotation * targetCharacterOrientation;
+            characterBody.transform.localRotation = Quaternion.AngleAxis(mouseAbsolute.x, Vector3.up)
+                                                    * targetCharacterOrientation;
         }
         else
         {
-            var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up));
-            transform.localRotation *= yRotation;
+            transform.localRotation *= Quaternion.AngleAxis(mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up));
         }
     }
 }

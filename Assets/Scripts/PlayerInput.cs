@@ -4,54 +4,33 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public Vector2 input
+    public Vector2 GetInput()
     {
-        get
-        {
-            Vector2 i = Vector2.zero;
-            i.x = Input.GetAxis("Horizontal");
-            i.y = Input.GetAxis("Vertical");
-            i *= (i.x != 0.0f && i.y != 0.0f) ? .7071f : 1.0f;
-            return i;
-        }
+        Vector2 i = Vector2.zero;
+        i.x = UnityEngine.Input.GetAxis("Horizontal");
+        i.y = UnityEngine.Input.GetAxis("Vertical");
+        i *= (i.x != 0.0f && i.y != 0.0f) ? .7071f : 1.0f;
+        return i;
     }
 
-    public Vector2 down
+    public Vector2 GetDown() { return _down; }
+
+    public Vector2 GetRaw()
     {
-        get { return _down; }
+        Vector2 i = Vector2.zero;
+        i.x = UnityEngine.Input.GetAxisRaw("Horizontal");
+        i.y = UnityEngine.Input.GetAxisRaw("Vertical");
+        i *= (i.x != 0.0f && i.y != 0.0f) ? .7071f : 1.0f;
+        return i;
     }
 
-    public Vector2 raw
-    {
-        get
-        {
-            Vector2 i = Vector2.zero;
-            i.x = Input.GetAxisRaw("Horizontal");
-            i.y = Input.GetAxisRaw("Vertical");
-            i *= (i.x != 0.0f && i.y != 0.0f) ? .7071f : 1.0f;
-            return i;
-        }
-    }
+    public bool GetRun() { return UnityEngine.Input.GetKey(KeyCode.LeftShift); }
 
-    public bool run
-    {
-        get { return Input.GetKey(KeyCode.LeftShift); }
-    }
+    public bool GetCrouch() { return UnityEngine.Input.GetKeyDown(KeyCode.C); }
 
-    public bool crouch
-    {
-        get { return Input.GetKeyDown(KeyCode.C); }
-    }
+    public bool GetCrouching() { return UnityEngine.Input.GetKey(KeyCode.C); }
 
-    public bool crouching
-    {
-        get { return Input.GetKey(KeyCode.C); }
-    }
-
-    public bool leftClick
-    {
-        get { return Input.GetMouseButtonDown(0); }
-    }
+    public bool GetLeftClick() { return UnityEngine.Input.GetMouseButtonDown(0); }
 
     private Vector2 previous;
     private Vector2 _down;
@@ -67,29 +46,35 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
         _down = Vector2.zero;
-        if (raw.x != previous.x)
+        if (GetRaw().x != previous.x)
         {
-            previous.x = raw.x;
+            previous.x = GetRaw().x;
             if (previous.x != 0)
+            {
                 _down.x = previous.x;
+            }
         }
-        if (raw.y != previous.y)
+        if (GetRaw().y != previous.y)
         {
-            previous.y = raw.y;
+            previous.y = GetRaw().y;
             if (previous.y != 0)
+            {
                 _down.y = previous.y;
+            }
         }
     }
 
     public void FixedUpdate()
     {
-        if (!Input.GetKey(KeyCode.Space))
+        if (!UnityEngine.Input.GetKey(KeyCode.Space))
         {
             jump = false;
             jumpTimer++;
         }
         else if (jumpTimer > 0)
+        {
             jump = true;
+        }
     }
 
     public bool Jump()
