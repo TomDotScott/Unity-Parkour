@@ -4,25 +4,42 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float walkSpeed = 4.0f;
-    public float runSpeed = 8.0f;
+    [Header("Current Values")]
+    public float walkSpeed;
+    public float runSpeed;
     public float slideSpeed = 10.0f;
     public float crouchSpeed = 2f;
-    [SerializeField]
-    private float jumpSpeed = 8.0f;
-    [SerializeField]
-    private float gravity = 20.0f;
-    [SerializeField]
-    private float antiBumpFactor = .75f;
-    [HideInInspector]
-    public Vector3 moveDirection = Vector3.zero;
-    [HideInInspector]
-    public Vector3 contactPoint;
-    [HideInInspector]
-    public CharacterController controller;
-    [HideInInspector]
-    public bool playerControl = false;
+    [SerializeField] private float jumpSpeed = 8.0f;
+    
+    [Header("Standard Values")]
+    public float standardWalkSpeed;
+    public float standardRunSpeed;
+    public float standardSlideSpeed = 10.0f;
+    public float standardCrouchSpeed = 2f;
+    [SerializeField] private float standardJumpSpeed = 8.0f;
 
+    [Header("Giant Values")]
+    public float giantWalkSpeed;
+    public float giantRunSpeed;
+    public float giantSlideSpeed = 10.0f;
+    public float giantCrouchSpeed = 2f;
+    [SerializeField] private float giantJumpSpeed = 8.0f;
+
+    [Header("Tiny Values")]
+    public float tinyWalkSpeed;
+    public float tinyRunSpeed;
+    public float tinySlideSpeed = 10.0f;
+    public float tinyCrouchSpeed = 2f;
+    [SerializeField] private float tinyJumpSpeed = 8.0f;
+
+    [HideInInspector] public Vector3 moveDirection = Vector3.zero;
+    [HideInInspector] public Vector3 contactPoint;
+    [HideInInspector] public CharacterController characterController;
+    [HideInInspector] public bool playerControl = false;
+
+    [Header("Other Values")]
+    [SerializeField] private float gravity = 20.0f;
+    [SerializeField] private float antiBumpFactor = .75f;
     public bool grounded = false;
     public Vector3 jump = Vector3.zero;
 
@@ -33,26 +50,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        // Saving component references to improve performance.
-        controller = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
     }
-    
+
     private void Update()
     {
         if (forceTime > 0)
+        {
             forceTime -= Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
     {
-        if(forceTime > 0)
+        if (forceTime > 0)
         {
             if (forceGravity)
             {
                 moveDirection.y -= gravity * Time.deltaTime;
             }
 
-            grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
+            grounded = (characterController.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
         }
     }
 
@@ -76,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
             // Apply gravity
             moveDirection.y -= gravity * Time.deltaTime;
             // Move the controller, and set grounded true or false depending on whether we're standing on something
-            grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
+            grounded = (characterController.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
         }
     }
 
@@ -98,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
             UpdateJump();
 
-            grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
+            grounded = (characterController.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
         }
     }
 
@@ -135,5 +153,33 @@ public class PlayerMovement : MonoBehaviour
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         contactPoint = hit.point;
+    }
+
+
+    public void SetStandard()
+    {
+        walkSpeed = standardWalkSpeed;
+        runSpeed = standardRunSpeed;
+        slideSpeed = standardSlideSpeed;
+        crouchSpeed = standardCrouchSpeed;
+        jumpSpeed = standardJumpSpeed;
+    }
+
+    public void SetGiant()
+    {
+        walkSpeed = giantWalkSpeed;
+        runSpeed = giantRunSpeed;
+        slideSpeed = giantSlideSpeed;
+        crouchSpeed = giantCrouchSpeed;
+        jumpSpeed = giantJumpSpeed;
+    }
+
+    public void SetTiny()
+    {
+        walkSpeed = tinyWalkSpeed;
+        runSpeed = tinyRunSpeed;
+        slideSpeed = tinySlideSpeed;
+        crouchSpeed = tinyCrouchSpeed;
+        jumpSpeed = tinyJumpSpeed;
     }
 }

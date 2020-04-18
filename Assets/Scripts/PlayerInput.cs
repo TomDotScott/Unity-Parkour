@@ -32,6 +32,10 @@ public class PlayerInput : MonoBehaviour
 
     public bool GetLeftClick() { return UnityEngine.Input.GetMouseButtonDown(0); }
 
+    public bool GetGrowButton() { return UnityEngine.Input.GetKeyDown(KeyCode.E); }
+
+    public bool GetShrinkButton() { return UnityEngine.Input.GetKeyDown(KeyCode.Q); }
+
     private Vector2 previous;
     private Vector2 _down;
 
