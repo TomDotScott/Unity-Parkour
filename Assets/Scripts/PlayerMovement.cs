@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private Transform start;
+
     [Header("Current Values")]
     public float walkSpeed;
     public float runSpeed;
@@ -152,9 +154,16 @@ public class PlayerMovement : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if(hit.gameObject.transform.tag == "KillBox")
+        {
+            transform.position = start.position;
+        }else if(hit.gameObject.transform.tag == "NextLevel")
+        {
+            hit.transform.SendMessage("LoadNextLevel", SendMessageOptions.DontRequireReceiver);
+        }
         contactPoint = hit.point;
-    }
 
+    }
 
     public void SetStandard()
     {

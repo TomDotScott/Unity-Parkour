@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     float radius;
     float height;
     float halfradius;
-    float halfheight;
+    float quarterHeight;
     float hookShotSize;
 
 
@@ -73,8 +73,8 @@ public class PlayerController : MonoBehaviour
         radius = movement.characterController.radius;
         height = movement.characterController.height;
         halfradius = radius / 2f;
-        halfheight = height / 2f;
-        rayDistance = halfheight + radius + .1f;
+        quarterHeight = height / 4f;
+        rayDistance = quarterHeight + radius + .1f;
     }
 
     /******************************* UPDATE ******************************/
@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
         if (playerInput.GetCrouch() && canSlide())
         {
             slideDir = transform.forward;
-            movement.characterController.height = halfheight;
+            movement.characterController.height = quarterHeight;
             controlledSlide = true;
             slideTime = 1f;
         }
@@ -315,7 +315,7 @@ public class PlayerController : MonoBehaviour
 
     void Crouch()
     {
-        movement.characterController.height = halfheight;
+        movement.characterController.height = quarterHeight;
         state = MovementState.crouching;
     }
 
@@ -526,7 +526,7 @@ public class PlayerController : MonoBehaviour
         Vector3 localPos = vaultHelper.transform.InverseTransformPoint(transform.position);
         Vector3 move = (vaultDir + (Vector3.up * -(localPos.z - radius) * height)).normalized;
 
-        if (localPos.z > halfheight)
+        if (localPos.z > quarterHeight)
         {
             movement.characterController.height = height;
             state = MovementState.moving;
@@ -543,7 +543,7 @@ public class PlayerController : MonoBehaviour
             checkDis += (movement.characterController.velocity.magnitude / 16f); //Check farther if moving faster
             if (hasObjectInfront(checkDis, vaultLayer) && playerInput.Jump()
                 && Physics.SphereCast(transform.position + (transform.forward * (radius - 0.25f)), 0.25f, transform.forward, out var sphereHit, checkDis, vaultLayer)
-                && Physics.SphereCast(sphereHit.point + (Vector3.up * halfheight), radius, Vector3.down, out var hit, halfheight - radius, vaultLayer)
+                && Physics.SphereCast(sphereHit.point + (Vector3.up * quarterHeight), radius, Vector3.down, out var hit, quarterHeight - radius, vaultLayer)
                 && CanFit(hit))
             {
 
@@ -574,7 +574,7 @@ public class PlayerController : MonoBehaviour
     bool hasObjectInfront(float dis, LayerMask layer)
     {
         Vector3 top = transform.position + (transform.forward * 0.25f);
-        Vector3 bottom = top - (transform.up * halfheight);
+        Vector3 bottom = top - (transform.up * quarterHeight);
 
         return (Physics.CapsuleCastAll(top, bottom, 0.25f, transform.forward, dis, layer).Length >= 1);
     }
