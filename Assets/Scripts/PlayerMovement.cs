@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private bool forceGravity;
     private float forceTime = 0;
 
-    private void Start()
+    private void Awake()
     {
         characterController = GetComponent<CharacterController>();
     }
