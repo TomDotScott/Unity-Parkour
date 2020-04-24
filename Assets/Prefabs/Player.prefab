@@ -186,6 +186,8 @@ GameObject:
   - component: {fileID: 7085721663646366575}
   - component: {fileID: 963194229}
   - component: {fileID: 1693275265}
+  - component: {fileID: 5503693520552826348}
+  - component: {fileID: 5503693520552826385}
   m_Layer: 31
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -232,7 +234,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -336,6 +338,54 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &5503693520552826348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085721663646366572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b185edfba172b8947a747a4937fd7c7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 891dadc9a8505d94e8f4e3b5e7175db4, type: 3}
+  VHSClip: {fileID: 32900000, guid: f9c929d1d7bf4274ea5349c20dd53fa2, type: 3}
+--- !u!328 &5503693520552826385
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7085721663646366572}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: f9c929d1d7bf4274ea5349c20dd53fa2, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 7085721663646366574}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: _MainTex
+  m_RenderMode: 4
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 0
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 00
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
 --- !u!1 &7085721664118310506
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +416,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7085721664118310506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.875, z: 0}
+  m_LocalPosition: {x: 469, y: 22, z: 54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6526632516643132702}
@@ -428,8 +478,6 @@ MonoBehaviour:
   wallrunLayer:
     serializedVersion: 2
     m_Bits: 512
-  state: 0
-  growShrinkState: 0
   gameCamera: {fileID: 7085721663646366574}
   hookShotTransform: {fileID: 1426086415}
   growthRate: 10
