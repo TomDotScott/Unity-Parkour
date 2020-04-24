@@ -435,8 +435,11 @@ MonoBehaviour:
   growthRate: 10
   shrinkRate: 10
   standardSize: 1.75
+  standardRadius: 0.325
   giantSize: 20
+  giantRadius: 1
   tinySize: 0.01
+  tinyRadius: 0.1
 --- !u!114 &1149800568
 MonoBehaviour:
   m_ObjectHideFlags: 0
