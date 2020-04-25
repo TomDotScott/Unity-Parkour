@@ -24,14 +24,14 @@ public class TextPrompts : MonoBehaviour
     {
         if (begin)
         {
-            StartCoroutine(TypeWriterEffect());
+            StartCoroutine(TypeWriterEffectIn());
             begin = false;
         }
 
         if (CheckIfFinished())
         {
             timer += Time.deltaTime;
-            if(timer >= lifeTime)
+            if (timer >= lifeTime)
             {
                 Destroy(gameObject);
             }
@@ -43,18 +43,26 @@ public class TextPrompts : MonoBehaviour
         return textObject.text == textString;
     }
 
-    private IEnumerator TypeWriterEffect()
+    private IEnumerator TypeWriterEffectIn()
     {
-        foreach(char character in textString.ToCharArray())
+        foreach (char character in textString.ToCharArray())
         {
-            textObject.text += character;
+            if (character == '/')
+            {
+                textObject.text += "\n";
+
+            }
+            else
+            {
+                textObject.text += character;
+            }
             yield return new WaitForSeconds(0.1f);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
             begin = true;
