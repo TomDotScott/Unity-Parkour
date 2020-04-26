@@ -10,7 +10,7 @@ public class TextPrompts : MonoBehaviour
     private TextMesh textObject;
     [SerializeField] private float lifeTime;
     [SerializeField] private string textString;
-    private bool begin;
+    private bool begin, complete;
     private float timer;
     private BoxCollider boxCollider;
 
@@ -28,7 +28,7 @@ public class TextPrompts : MonoBehaviour
             begin = false;
         }
 
-        if (CheckIfFinished())
+        if (complete)
         {
             timer += Time.deltaTime;
             if (timer >= lifeTime)
@@ -36,11 +36,6 @@ public class TextPrompts : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-    }
-
-    private bool CheckIfFinished()
-    {
-        return textObject.text == textString;
     }
 
     private IEnumerator TypeWriterEffectIn()
@@ -58,6 +53,7 @@ public class TextPrompts : MonoBehaviour
             }
             yield return new WaitForSeconds(0.05f);
         }
+        complete = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,7 +62,6 @@ public class TextPrompts : MonoBehaviour
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
             begin = true;
-            //boxCollider.isTrigger = false;
             Destroy(boxCollider);
         }
     }

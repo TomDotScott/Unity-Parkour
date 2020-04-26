@@ -2878,17 +2878,12 @@ PrefabInstance:
     - target: {fileID: 5739545436013933547, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: textString
-      value: Move the mouse to look around
+      value: Move the mouse to look around/in this world so abound
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436013933547, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: lifeTime
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739545436970767016, guid: 85ed88631cc47254e82625f76b891d70,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -2904,6 +2899,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5739545436970767016, guid: 85ed88631cc47254e82625f76b891d70,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766998, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -4751,17 +4751,12 @@ PrefabInstance:
     - target: {fileID: 5739545436013933547, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: textString
-      value: Use WASD to move
+      value: You must use WASD to move/That'll get you in the groove
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436013933547, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: lifeTime
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739545436970767016, guid: 85ed88631cc47254e82625f76b891d70,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -4771,12 +4766,17 @@ PrefabInstance:
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5739545436970767016, guid: 85ed88631cc47254e82625f76b891d70,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766998, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -5486,12 +5486,7 @@ PrefabInstance:
     - target: {fileID: 5739545436013933547, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: textString
-      value: Keep Jumping to reach the goal!
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739545436970767016, guid: 85ed88631cc47254e82625f76b891d70,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: Keep Jumping to reach the goal!/I heard jumping is good for the soul
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -5522,6 +5517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5739545436970767016, guid: 85ed88631cc47254e82625f76b891d70,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766998, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -6358,7 +6358,7 @@ PrefabInstance:
     - target: {fileID: 5739545436013933546, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: m_Size.z
-      value: 5
+      value: 13.21
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436013933547, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -6368,12 +6368,7 @@ PrefabInstance:
     - target: {fileID: 5739545436013933547, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: textString
-      value: Press Space to Jump
-      objectReference: {fileID: 0}
-    - target: {fileID: 5739545436970767016, guid: 85ed88631cc47254e82625f76b891d70,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: Press Space to Jump/Use your legs and pump!
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -6389,6 +6384,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5739545436970767016, guid: 85ed88631cc47254e82625f76b891d70,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766998, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -11420,7 +11420,7 @@ PrefabInstance:
     - target: {fileID: 5739545436013933547, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: textString
-      value: White Rabbit, you're late! Press shift to run!
+      value: White Rabbit, you're late!/Press shift to run, it can't wait!
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
@@ -11430,7 +11430,7 @@ PrefabInstance:
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 5739545436970766999, guid: 85ed88631cc47254e82625f76b891d70,
         type: 3}
