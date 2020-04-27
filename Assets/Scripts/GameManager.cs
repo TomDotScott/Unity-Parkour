@@ -10,8 +10,6 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject pausedMenu;
-    [SerializeField] private Transform startPosition;
-    [SerializeField] private Quaternion startRotation;
     [SerializeField] private Transform killBox;
 
     private PlayerInput playerInput;
@@ -23,8 +21,14 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = player.GetComponent<PlayerInput>();
     }
+
+    private void Awake()
+    {
+        playerInput = player.GetComponent<PlayerInput>();
+
+    }
+
 
     // Update is called once per frame
     void Update()

@@ -13,30 +13,35 @@ public class Menus : MonoBehaviour
         if (!AnimatorIsPlaying())
         {
             Cursor.lockState = CursorLockMode.Confined;
+            Debug.Log("PAUSED");
         }
     }
 
 
     public void Resume()
     {
+        Debug.Log("UNPAUSED");
         gameObject.SetActive(false);
         GameManager.Instance.IsPaused = false;
     }
 
     public void Restart()
     {
+        Debug.Log("RESTARTED");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         GameManager.Instance.IsPaused = false;
     }
 
     public void QuitToMain()
     {
+        Debug.Log("QUIT TO MAIN MENU");
         GameManager.Instance.IsPaused = false;
         SceneManager.LoadScene(0);
     }
 
     public void QuitGame()
     {
+        Debug.Log("QUIT GAME");
         Application.Quit();
     }
 
