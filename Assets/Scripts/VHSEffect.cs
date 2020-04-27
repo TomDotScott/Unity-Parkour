@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Video;
 
-[ExecuteInEditMode]
-
 public class VHSEffect : MonoBehaviour
 {
     [SerializeField] private Shader shader;

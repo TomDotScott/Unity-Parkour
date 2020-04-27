@@ -4,35 +4,33 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Transform start;
-
     [Header("Current Values")]
     public float walkSpeed;
     public float runSpeed;
-    public float slideSpeed = 10.0f;
-    public float crouchSpeed = 2f;
-    [SerializeField] private float jumpSpeed = 8.0f;
+    public float slideSpeed;
+    public float crouchSpeed;
+    [SerializeField] private float jumpSpeed;
     
     [Header("Standard Values")]
     public float standardWalkSpeed;
     public float standardRunSpeed;
-    public float standardSlideSpeed = 10.0f;
-    public float standardCrouchSpeed = 2f;
-    [SerializeField] private float standardJumpSpeed = 8.0f;
+    public float standardSlideSpeed;
+    public float standardCrouchSpeed;
+    [SerializeField] private float standardJumpSpeed;
 
     [Header("Giant Values")]
     public float giantWalkSpeed;
     public float giantRunSpeed;
-    public float giantSlideSpeed = 10.0f;
-    public float giantCrouchSpeed = 2f;
-    [SerializeField] private float giantJumpSpeed = 8.0f;
+    public float giantSlideSpeed;
+    public float giantCrouchSpeed;
+    [SerializeField] private float giantJumpSpeed;
 
     [Header("Tiny Values")]
     public float tinyWalkSpeed;
     public float tinyRunSpeed;
-    public float tinySlideSpeed = 10.0f;
-    public float tinyCrouchSpeed = 2f;
-    [SerializeField] private float tinyJumpSpeed = 8.0f;
+    public float tinySlideSpeed;
+    public float tinyCrouchSpeed;
+    [SerializeField] private float tinyJumpSpeed;
 
     [HideInInspector] public Vector3 moveDirection = Vector3.zero;
     [HideInInspector] public Vector3 contactPoint;
@@ -150,19 +148,6 @@ public class PlayerMovement : MonoBehaviour
         forceTime = time;
         forceGravity = applyGravity;
         moveDirection = direction * speed;
-    }
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if(hit.gameObject.transform.tag == "KillBox")
-        {
-            transform.position = start.position;
-        }else if(hit.gameObject.transform.tag == "NextLevel")
-        {
-            hit.transform.SendMessage("LoadNextLevel", SendMessageOptions.DontRequireReceiver);
-        }
-        contactPoint = hit.point;
-
     }
 
     public void SetStandard()

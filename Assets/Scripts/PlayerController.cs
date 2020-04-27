@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header ("Layer Masks")]
+    [Header("Layer Masks")]
     [SerializeField] private LayerMask vaultLayer;
     [SerializeField] private LayerMask ledgeLayer;
     [SerializeField] private LayerMask ladderLayer;
@@ -83,26 +83,29 @@ public class PlayerController : MonoBehaviour
     /******************************* UPDATE ******************************/
     void Update()
     {
-        //Updates
-        UpdateInteraction();
-        UpdateMovingStatus();
+        if (!GameManager.Instance.IsPaused)
+        {
+            //Updates
+            UpdateInteraction();
+            UpdateMovingStatus();
 
 
-        //Check for movement updates
-        CheckForGrowing();
-        CheckForShrinking();
-        CheckSliding();
-        CheckCrouching();
-        CheckForWallrun();
-        CheckLadderClimbing();
-        UpdateLedgeGrabbing();
-        CheckForVault();
+            //Check for movement updates
+            CheckForGrowing();
+            CheckForShrinking();
+            CheckSliding();
+            CheckCrouching();
+            CheckForWallrun();
+            CheckLadderClimbing();
+            UpdateLedgeGrabbing();
+            CheckForVault();
 
-        //Check for item updates
-        CheckHookShot();
+            //Check for item updates
+            CheckHookShot();
 
-        //Misc
-        UpdateLean();
+            //Misc
+            UpdateLean();
+        }
     }
 
     void UpdateInteraction()
@@ -189,7 +192,7 @@ public class PlayerController : MonoBehaviour
                 DefaultMovement();
                 break;
         }
-        if(GrowShrinkState == GrowShrinkState.standard || GrowShrinkState == GrowShrinkState.giant || GrowShrinkState == GrowShrinkState.tiny)
+        if (GrowShrinkState == GrowShrinkState.standard || GrowShrinkState == GrowShrinkState.giant || GrowShrinkState == GrowShrinkState.tiny)
         {
             CheckForGrowing();
             CheckForShrinking();

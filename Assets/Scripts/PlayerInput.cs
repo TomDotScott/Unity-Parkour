@@ -36,6 +36,8 @@ public class PlayerInput : MonoBehaviour
 
     public bool GetShrinkButton() { return UnityEngine.Input.GetKeyDown(KeyCode.Q); }
 
+    public bool GetPaused() { return UnityEngine.Input.GetKeyDown(KeyCode.Escape); }
+
     private Vector2 previous;
     private Vector2 _down;
 
