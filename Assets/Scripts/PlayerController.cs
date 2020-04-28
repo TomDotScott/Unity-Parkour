@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     Vector3 hookShotPos;
 
     PlayerMovement movement;
-    PlayerInput playerInput;
+    public PlayerInput playerInput;
     AnimateLean animateLean;
 
     bool canInteract;
@@ -567,7 +567,7 @@ public class PlayerController : MonoBehaviour
     void CreateVaultHelper()
     {
         vaultHelper = new GameObject();
-        vaultHelper.transform.name = "(IGNORE) Vault Helper";
+        vaultHelper.transform.name = "Vault Helper";
     }
 
     void SetVaultHelper()

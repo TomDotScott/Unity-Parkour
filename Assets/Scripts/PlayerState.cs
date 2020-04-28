@@ -4,6 +4,7 @@
     {
         idle,
         moving,
+        jumping,
         crouching,
         sliding,
         climbingLadder,
