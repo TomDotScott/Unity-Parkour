@@ -34,7 +34,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance.IsPaused && !GameManager.Instance.GameOver)
+        if (!GameManager.Instance.IsPaused || !GameManager.Instance.GameOver || GameManager.Instance.LevelComplete)
         {
             // Ensure the cursor is always locked when set
             Cursor.lockState = CursorLockMode.Locked;
@@ -73,6 +73,10 @@ public class CameraMovement : MonoBehaviour
             characterBody.transform.localRotation = Quaternion.AngleAxis(mouseAbsolute.x, Vector3.up)
                                                     * targetCharacterOrientation;
 
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Confined;
         }
     }
 }

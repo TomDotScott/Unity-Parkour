@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using TMPro;
+using System;
 
 /// <summary>
 /// GameManager handles the core aspects of the game
@@ -11,33 +13,78 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject pausedMenu;
     [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private GameObject levelCompleteMenu;
     [SerializeField] private Transform killBox;
+    [SerializeField] private TextMeshProUGUI secondsTimer;
 
     private PlayerInput playerInput;
     private PlayerController playerController;
 
+    private float score;
+
     private bool isPaused;
     private bool gameOver;
+    private bool levelComplete;
 
     public bool IsPaused { get => isPaused; set => isPaused = value; }
     public bool GameOver { get => gameOver; set => gameOver = value; }
+    public bool LevelComplete
+    {
+        get => levelComplete; set
+        {
+            levelComplete = value;
+            if (value)
+            {
+                levelCompleteMenu.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = "Score: " + SecondsToMinutesAndSeconds(score);
+                string levelName = "Level" + SceneManager.GetActiveScene().buildIndex.ToString();
+
+
+                //If the score is greater than the saved score then we have set a new highscore!
+                float highScore = PlayerPrefs.GetFloat(levelName, 10000);
+                if (highScore > score)
+                {
+                    Debug.Log("IT'S A NEW HIGHSCORE");
+                    PlayerPrefs.SetFloat(levelName, score);
+                    highScore = score;
+                }
+
+
+                levelCompleteMenu.transform.Find("HighScore").GetComponent<TextMeshProUGUI>().text = "HighScore: " + SecondsToMinutesAndSeconds(highScore);
+                levelCompleteMenu.SetActive(true);
+            }
+        }
+    }
 
     private void Awake()
     {
         playerInput = player.GetComponent<PlayerInput>();
         playerController = player.GetComponent<PlayerController>();
+        levelCompleteMenu.transform.Find("Level").GetComponent<TextMeshProUGUI>().text = "Level " + SceneManager.GetActiveScene().buildIndex + " Complete!";
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (gameOverMenu.activeSelf == false)
+        if (!levelComplete)
         {
             CheckIfPlayerDead();
             CheckPause();
+            if (!isPaused)
+            {
+                //Increase the timer
+                score += Time.deltaTime;
+                secondsTimer.text = SecondsToMinutesAndSeconds(score);
+            }
         }
     }
+
+    string SecondsToMinutesAndSeconds(float timeElapsed)
+    {
+        TimeSpan t = TimeSpan.FromSeconds(timeElapsed);
+        return string.Format("{0}:{1}.{2}", t.Minutes, t.Seconds, t.Milliseconds);
+    }
+
 
     private void CheckPause()
     {
@@ -56,6 +103,7 @@ public class GameManager : Singleton<GameManager>
 
     private void PauseUnpause()
     {
+        secondsTimer.gameObject.SetActive(!secondsTimer.gameObject.activeSelf);
         pausedMenu.SetActive(!pausedMenu.activeSelf);
         isPaused = !isPaused;
     }
@@ -65,6 +113,7 @@ public class GameManager : Singleton<GameManager>
         if (playerController.IsDead)
         {
             gameOverMenu.SetActive(true);
+            secondsTimer.gameObject.SetActive(false);
             gameOver = true;
         }
     }

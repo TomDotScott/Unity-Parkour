@@ -36,6 +36,11 @@ public class Menus : MonoBehaviour
         GameManager.Instance.IsPaused = false;
     }
 
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
     public void QuitToMain()
     {
         Debug.Log("QUIT TO MAIN MENU");

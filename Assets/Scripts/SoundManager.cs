@@ -73,7 +73,7 @@ public class SoundManager : Singleton<SoundManager>
     public void PlaySFX(string name)
     {
         //Plays the clip once
-        sfxSource.PlayOneShot(sfxClips[name]);
+        //sfxSource.PlayOneShot(sfxClips[name]);
     }
 
     public void StopSFX()
