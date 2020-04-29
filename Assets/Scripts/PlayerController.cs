@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [Header("Hook Shot Mechanics")]
     [SerializeField] private Camera gameCamera;
     [SerializeField] private Transform hookShotTransform;
+    [SerializeField] private GameObject hookShotGun;
 
     [Header("Growing and Shrinking Attributes")]
     [SerializeField] private float growthRate;
@@ -42,6 +43,12 @@ public class PlayerController : MonoBehaviour
 
     bool canInteract;
     bool canGrabLedge;
+
+    bool canHookshot = false;
+    bool canGrow = false;
+    bool canShrink = false;
+    bool isDead = false;
+
     bool controlledSlide;
 
     float rayDistance;
@@ -59,12 +66,27 @@ public class PlayerController : MonoBehaviour
     public MovementState State { get => state; set => state = value; }
     public GrowShrinkState GrowShrinkState { get => growShrinkState; set => growShrinkState = value; }
 
+    public bool CanHookshot
+    {
+        get => canHookshot;
+        set
+        {
+            hookShotGun.SetActive(true);
+            canHookshot = value;
+        }
+    }
+
+    public bool CanGrow { get => canGrow; set => canGrow = value; }
+    public bool CanShrink { get => canShrink; set => canShrink = value; }
+    public bool IsDead { get => isDead; set => isDead = value; }
+
     private void Start()
     {
         CreateVaultHelper();
         playerInput = GetComponent<PlayerInput>();
         movement = GetComponent<PlayerMovement>();
 
+        hookShotGun.SetActive(false);
         hookShotTransform.gameObject.SetActive(false);
 
         if (GetComponentInChildren<AnimateLean>())
@@ -91,8 +113,6 @@ public class PlayerController : MonoBehaviour
 
 
             //Check for movement updates
-            CheckForGrowing();
-            CheckForShrinking();
             CheckSliding();
             CheckCrouching();
             CheckForWallrun();
@@ -101,7 +121,21 @@ public class PlayerController : MonoBehaviour
             CheckForVault();
 
             //Check for item updates
-            CheckHookShot();
+            if (CanHookshot)
+            {
+                CheckHookShot();
+            }
+
+            if (CanGrow || GrowShrinkState == GrowShrinkState.tiny)
+            {
+                CheckForGrowing();
+            }
+
+            if (CanShrink || GrowShrinkState == GrowShrinkState.giant)
+            {
+                CheckForShrinking();
+            }
+
 
             //Misc
             UpdateLean();
@@ -192,16 +226,11 @@ public class PlayerController : MonoBehaviour
                 DefaultMovement();
                 break;
         }
-        if (GrowShrinkState == GrowShrinkState.standard || GrowShrinkState == GrowShrinkState.giant || GrowShrinkState == GrowShrinkState.tiny)
-        {
-            CheckForGrowing();
-            CheckForShrinking();
-        }
-        else
+
+        if (GrowShrinkState != GrowShrinkState.standard && GrowShrinkState != GrowShrinkState.giant && GrowShrinkState != GrowShrinkState.tiny)
         {
             GrowShrinkAnimation();
         }
-
     }
 
     void DefaultMovement()

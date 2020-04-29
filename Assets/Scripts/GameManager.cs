@@ -10,31 +10,33 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject pausedMenu;
+    [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private Transform killBox;
 
     private PlayerInput playerInput;
+    private PlayerController playerController;
 
     private bool isPaused;
+    private bool gameOver;
 
     public bool IsPaused { get => isPaused; set => isPaused = value; }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    public bool GameOver { get => gameOver; set => gameOver = value; }
 
     private void Awake()
     {
         playerInput = player.GetComponent<PlayerInput>();
-
+        playerController = player.GetComponent<PlayerController>();
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        CheckIfPlayerDead();
-        CheckPause();
+        if (gameOverMenu.activeSelf == false)
+        {
+            CheckIfPlayerDead();
+            CheckPause();
+        }
     }
 
     private void CheckPause()
@@ -60,9 +62,10 @@ public class GameManager : Singleton<GameManager>
 
     private void CheckIfPlayerDead()
     {
-        if(player.transform.position.y <= killBox.position.y)
+        if (playerController.IsDead)
         {
-            Debug.Log("THE PLAYER DIED!");
+            gameOverMenu.SetActive(true);
+            gameOver = true;
         }
     }
 

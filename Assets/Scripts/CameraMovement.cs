@@ -34,7 +34,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance.IsPaused)
+        if (!GameManager.Instance.IsPaused && !GameManager.Instance.GameOver)
         {
             // Ensure the cursor is always locked when set
             Cursor.lockState = CursorLockMode.Locked;
