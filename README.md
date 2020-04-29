@@ -1,4 +1,4 @@
-# Unity-Parkour
+# Neon Wonderland!
 A first person parkour game made in Unity for the Games Middleware module of my University Course. In this assignment, we had to make a game based on Alice in Wonderland. Naturally, I decided to go for a 80's Synthwave-inspired parkour game from the perspective of the white rabbit!
 
 Sources:
