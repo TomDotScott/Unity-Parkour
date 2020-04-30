@@ -2215,21 +2215,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6756524775032712877, guid: 29227fbf81eeeba4a9764ebf0cd30845,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 8650797320336849781}
-    - target: {fileID: 6756524775032712877, guid: 29227fbf81eeeba4a9764ebf0cd30845,
-        type: 3}
-      propertyPath: musicSlider
-      value: 
-      objectReference: {fileID: 906867716}
-    - target: {fileID: 6756524775032712877, guid: 29227fbf81eeeba4a9764ebf0cd30845,
-        type: 3}
-      propertyPath: sfxSlider
-      value: 
-      objectReference: {fileID: 906867715}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29227fbf81eeeba4a9764ebf0cd30845, type: 3}
 --- !u!1 &550674850
@@ -2899,6 +2884,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1540230789}
+    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3993933184954773781, guid: e7e7a8212119a40468f44cd2e55246fa,
         type: 3}
       propertyPath: m_Mesh
@@ -2919,11 +2909,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1387727403}
-    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e7a8212119a40468f44cd2e55246fa, type: 3}
 --- !u!4 &610841847 stripped
@@ -5292,30 +5277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &906867715 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 566593240, guid: 6473b3ec243e7e54f86ba08a7f201d49,
-    type: 3}
-  m_PrefabInstance: {fileID: 906867711}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &906867716 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 271925608, guid: 6473b3ec243e7e54f86ba08a7f201d49,
-    type: 3}
-  m_PrefabInstance: {fileID: 906867711}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &937151136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5408,6 +5369,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1968141859}
+    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3993933184954773781, guid: e7e7a8212119a40468f44cd2e55246fa,
         type: 3}
       propertyPath: m_Mesh
@@ -5428,11 +5394,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 285894618}
-    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e7a8212119a40468f44cd2e55246fa, type: 3}
 --- !u!4 &937151137 stripped
@@ -7015,6 +6976,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 970707971}
+    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3993933184954773781, guid: e7e7a8212119a40468f44cd2e55246fa,
         type: 3}
       propertyPath: m_Mesh
@@ -7035,11 +7001,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 352600292}
-    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e7a8212119a40468f44cd2e55246fa, type: 3}
 --- !u!4 &1108216001 stripped
@@ -12183,6 +12144,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1928419130}
+    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3993933184954773781, guid: e7e7a8212119a40468f44cd2e55246fa,
         type: 3}
       propertyPath: m_Mesh
@@ -12203,11 +12169,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1154894054}
-    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e7a8212119a40468f44cd2e55246fa, type: 3}
 --- !u!1001 &8650797320336849780
@@ -12279,15 +12240,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2dc14f109b09a743b03757ef68006c7, type: 3}
---- !u!114 &8650797320336849781 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6526632517528651534, guid: c2dc14f109b09a743b03757ef68006c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 8650797320336849780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7085721663065235329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bedef31058aa28142829c34206f79b48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
