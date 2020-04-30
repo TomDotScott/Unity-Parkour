@@ -113,12 +113,15 @@ public class PlayerController : MonoBehaviour
 
 
             //Check for movement updates
-            CheckSliding();
-            CheckCrouching();
-            CheckForWallrun();
-            CheckLadderClimbing();
-            UpdateLedgeGrabbing();
-            CheckForVault();
+            if (GrowShrinkState == GrowShrinkState.standard)
+            {
+                CheckSliding();
+                CheckCrouching();
+                CheckForWallrun();
+                CheckLadderClimbing();
+                UpdateLedgeGrabbing();
+                CheckForVault();
+            }
 
             //Check for item updates
             if (CanHookshot)
@@ -139,7 +142,6 @@ public class PlayerController : MonoBehaviour
 
             //Misc
             UpdateLean();
-
         }
     }
 
