@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.03
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.48235294, g: 0.48235294, b: 0.48235294, a: 1}
+  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0014785795, g: 0.0013591028, b: 0.0012890887, a: 1}
+  m_IndirectSpecularColor: {r: 0.016090982, g: 0.01466979, b: 0.013826404, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -50,9 +50,9 @@ LightmapSettings:
     m_BounceScale: 1
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
-    m_EnvironmentLightingMode: 1
+    m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 0
+    m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 2
@@ -2884,11 +2884,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1540230789}
-    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 3993933184954773781, guid: e7e7a8212119a40468f44cd2e55246fa,
         type: 3}
       propertyPath: m_Mesh
@@ -2909,6 +2904,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1387727403}
+    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e7a8212119a40468f44cd2e55246fa, type: 3}
 --- !u!4 &610841847 stripped
@@ -5369,11 +5369,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1968141859}
-    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 3993933184954773781, guid: e7e7a8212119a40468f44cd2e55246fa,
         type: 3}
       propertyPath: m_Mesh
@@ -5394,6 +5389,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 285894618}
+    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e7a8212119a40468f44cd2e55246fa, type: 3}
 --- !u!4 &937151137 stripped
@@ -6976,11 +6976,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 970707971}
-    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 3993933184954773781, guid: e7e7a8212119a40468f44cd2e55246fa,
         type: 3}
       propertyPath: m_Mesh
@@ -7001,6 +6996,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 352600292}
+    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e7a8212119a40468f44cd2e55246fa, type: 3}
 --- !u!4 &1108216001 stripped
@@ -12144,11 +12144,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1928419130}
-    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 3993933184954773781, guid: e7e7a8212119a40468f44cd2e55246fa,
         type: 3}
       propertyPath: m_Mesh
@@ -12169,6 +12164,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1154894054}
+    - target: {fileID: 8446132090308112614, guid: e7e7a8212119a40468f44cd2e55246fa,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e7a8212119a40468f44cd2e55246fa, type: 3}
 --- !u!1001 &8650797320336849780
