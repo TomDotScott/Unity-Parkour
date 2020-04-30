@@ -1352,6 +1352,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &52880488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 566593240, guid: 6473b3ec243e7e54f86ba08a7f201d49,
+    type: 3}
+  m_PrefabInstance: {fileID: 52880483}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &52880489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 271925608, guid: 6473b3ec243e7e54f86ba08a7f201d49,
+    type: 3}
+  m_PrefabInstance: {fileID: 52880483}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &52976342
 Mesh:
   m_ObjectHideFlags: 0
@@ -21197,6 +21221,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 966824730}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &966824732 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6526632517528651534, guid: c2dc14f109b09a743b03757ef68006c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 966824730}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966824731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bedef31058aa28142829c34206f79b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &979624107
 Mesh:
   m_ObjectHideFlags: 0
@@ -31486,6 +31522,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6756524775032712877, guid: 29227fbf81eeeba4a9764ebf0cd30845,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 966824732}
+    - target: {fileID: 6756524775032712877, guid: 29227fbf81eeeba4a9764ebf0cd30845,
+        type: 3}
+      propertyPath: musicSlider
+      value: 
+      objectReference: {fileID: 52880489}
+    - target: {fileID: 6756524775032712877, guid: 29227fbf81eeeba4a9764ebf0cd30845,
+        type: 3}
+      propertyPath: sfxSlider
+      value: 
+      objectReference: {fileID: 52880488}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29227fbf81eeeba4a9764ebf0cd30845, type: 3}
 --- !u!4 &1476988130 stripped

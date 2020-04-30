@@ -25,6 +25,9 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     private Dictionary<string, AudioClip> sfxClips = new Dictionary<string, AudioClip>();
 
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
     [SerializeField] private PlayerController player;
 
     private PlayerStates.MovementState lastPlayerState;
@@ -38,6 +41,7 @@ public class SoundManager : Singleton<SoundManager>
         sfxSource = gameObject.transform.GetChild(0).GetComponent<AudioSource>();
         musicSource = gameObject.transform.GetChild(1).GetComponent<AudioSource>();
 
+        LoadVolume();
 
         //Instantiates the SFXClips array by loading all audioclips from the assetfolder
         AudioClip[] clips = Resources.LoadAll<AudioClip>("Audio/SFX") as AudioClip[];
@@ -48,9 +52,12 @@ public class SoundManager : Singleton<SoundManager>
             sfxClips.Add(clip.name, clip);
         }
 
+        musicSlider.onValueChanged.AddListener(delegate { UpdateVolume(); });
+        sfxSlider.onValueChanged.AddListener(delegate { UpdateVolume(); });
+
+
         //Play the music of the level the player is playing
         musicSource.clip = soundtrack[SceneManager.GetActiveScene().buildIndex];
-
     }
 
     // Update is called once per frame
@@ -61,7 +68,11 @@ public class SoundManager : Singleton<SoundManager>
             ObservePlayer();
         }
 
-        if (musicSource.isPlaying) return;
+        if (musicSource.isPlaying)
+        {
+            return;
+        }
+
         musicSource.clip = soundtrack[SceneManager.GetActiveScene().buildIndex];
         musicSource.Play();
     }
@@ -84,6 +95,37 @@ public class SoundManager : Singleton<SoundManager>
     private bool SFXPlaying()
     {
         return sfxSource.isPlaying;
+    }
+
+    /// <summary>
+    /// Updates the volumes according to the sliders
+    /// </summary>
+    private void UpdateVolume()
+    {
+        //Sets the music volume
+        musicSource.volume = musicSlider.value;
+
+        //Sets the sfx volume
+        sfxSource.volume = sfxSlider.value;
+
+        //Saves the values
+        PlayerPrefs.SetFloat("SFX", sfxSlider.value);
+        PlayerPrefs.SetFloat("Music", musicSlider.value);
+    }
+
+    /// <summary>
+    /// Loads the volumes 
+    /// </summary>
+    private void LoadVolume()
+    {
+        //Loads the sfx volume
+        sfxSource.volume = PlayerPrefs.GetFloat("SFX", 0.75f);
+        //Loads the muisc volumes
+        musicSource.volume = PlayerPrefs.GetFloat("Music", 0.5f);
+
+        //Updates the sliders
+        musicSlider.value = musicSource.volume;
+        sfxSlider.value = sfxSource.volume;
     }
 
     private void ObservePlayer()

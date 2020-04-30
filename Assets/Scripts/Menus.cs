@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Menus : MonoBehaviour
 {
     public Animator animator;
-
+    [SerializeField] private GameObject optionsMenu;
 
     private void Update()
     {
@@ -24,7 +24,6 @@ public class Menus : MonoBehaviour
 
     public void Resume()
     {
-        Debug.Log("UNPAUSED");
         gameObject.SetActive(false);
         GameManager.Instance.IsPaused = false;
     }
@@ -52,6 +51,11 @@ public class Menus : MonoBehaviour
     {
         Debug.Log("QUIT GAME");
         Application.Quit();
+    }
+
+    public void ShowHideOptions()
+    {
+        optionsMenu.SetActive(!optionsMenu.activeSelf);
     }
 
     public bool AnimatorIsPlaying()
