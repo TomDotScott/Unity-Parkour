@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour
 
             //Misc
             UpdateLean();
+
         }
     }
 
@@ -420,13 +421,13 @@ public class PlayerController : MonoBehaviour
     void WallrunningMovement()
     {
         Vector3 input = playerInput.GetInput();
-        float s = (input.y > 0) ? input.y : 0;
+        float speed = (input.y > 0) ? input.y : 0;
 
-        Vector3 move = wallNormal * s;
+        Vector3 move = wallNormal * speed;
 
         if (playerInput.Jump())
         {
-            movement.Jump(((Vector3.up * (s + 0.5f)) + (wallNormal * 2f * s) + (transform.right * -wallDir * 1.25f)).normalized, s + 0.5f);
+            movement.Jump(((Vector3.up * (speed + 0.5f)) + (wallNormal * 2f * speed) + (transform.right * -wallDir * 1.25f)).normalized, speed + 0.5f);
             playerInput.ResetJump();
             State = MovementState.moving;
         }
@@ -436,7 +437,7 @@ public class PlayerController : MonoBehaviour
             State = MovementState.moving;
         }
 
-        movement.Move(move, movement.runSpeed, (1f - s) + (s / 4f));
+        movement.Move(move, movement.runSpeed, (1f - speed) + (speed / 4f));
     }
 
     void CheckForWallrun()
@@ -445,9 +446,13 @@ public class PlayerController : MonoBehaviour
         {
             int wall = 0;
             if (HasWallToSide(1))
+            {
                 wall = 1;
+            }
             else if (HasWallToSide(-1))
+            {
                 wall = -1;
+            }
 
             if (wall != 0)
             {
@@ -625,7 +630,7 @@ public class PlayerController : MonoBehaviour
         //Look at the position and scale toward it
         hookShotTransform.LookAt(hookShotPos);
 
-        float hookShotThrowSpeed = 30f;
+        float hookShotThrowSpeed = 60f;
 
         hookShotSize += hookShotThrowSpeed * Time.deltaTime;
         hookShotTransform.localScale = new Vector3(0.1f, 0.1f, hookShotSize);
@@ -655,7 +660,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 hookShotDir = (hookShotPos - transform.position).normalized;
         float distance = Vector3.Distance(gameCamera.transform.position, hookShotPos);
-        float hookSpeed = distance * 7;
+        float hookSpeed = distance * 10;
         movement.Move(hookShotDir, hookSpeed, 0);
         if (distance <= 1 || playerInput.GetLeftClick())
         {
