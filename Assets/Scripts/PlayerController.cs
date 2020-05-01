@@ -17,51 +17,55 @@ public class PlayerController : MonoBehaviour
     private GrowShrinkState growShrinkState;
 
     [Header("Hook Shot Mechanics")]
-    [SerializeField] private Camera gameCamera;
-    [SerializeField] private Transform hookShotTransform;
-    [SerializeField] private GameObject hookShotGun;
+    [SerializeField] private Camera gameCamera = null;
+    [SerializeField] private Transform hookShotTransform = null;
+    [SerializeField] private GameObject hookShotGun = null;
 
     [Header("Growing and Shrinking Attributes")]
-    [SerializeField] private float growthRate;
-    [SerializeField] private float shrinkRate;
-    [SerializeField] private float standardSize, standardRadius, giantSize, giantRadius, tinySize, tinyRadius;
+    [SerializeField] private float growthRate = 0;
+    [SerializeField] private float shrinkRate = 0;
+    [SerializeField] private float standardSize = 0;
+    [SerializeField] private float standardRadius = 0;
+    [SerializeField] private float giantSize = 0;
+    [SerializeField] private float giantRadius = 0;
+    [SerializeField] private float tinySize = 0;
+    [SerializeField] private float tinyRadius = 0;
 
+    private GameObject vaultHelper;
 
-    GameObject vaultHelper;
+    private Vector3 wallNormal = Vector3.zero;
+    private Vector3 ladderNormal = Vector3.zero;
+    private Vector3 pushFrom;
+    private Vector3 slideDir;
+    private Vector3 vaultOver;
+    private Vector3 vaultDir;
+    private Vector3 hookShotPos;
 
-    Vector3 wallNormal = Vector3.zero;
-    Vector3 ladderNormal = Vector3.zero;
-    Vector3 pushFrom;
-    Vector3 slideDir;
-    Vector3 vaultOver;
-    Vector3 vaultDir;
-    Vector3 hookShotPos;
-
-    PlayerMovement movement;
+    private PlayerMovement movement;
     public PlayerInput playerInput;
-    AnimateLean animateLean;
+    private AnimateLean animateLean;
 
-    bool canInteract;
-    bool canGrabLedge;
+    private bool canInteract;
+    private bool canGrabLedge;
 
-    bool canHookshot = false;
-    bool canGrow = false;
-    bool canShrink = false;
-    bool isDead = false;
+    private bool canHookshot = false;
+    private bool canGrow = false;
+    private bool canShrink = false;
+    private bool isDead = false;
 
-    bool controlledSlide;
+    private bool controlledSlide;
 
-    float rayDistance;
-    float slideLimit;
-    float slideTime;
-    float radius;
-    float height;
-    float halfradius;
-    float quarterHeight;
-    float hookShotSize;
+    private float rayDistance = 0;
+    private float slideLimit = 0;
+    private float slideTime = 0;
+    private float radius = 0;
+    private float height = 0;
+    private float halfradius = 0;
+    private float quarterHeight = 0;
+    private float hookShotSize = 0;
 
 
-    int wallDir = 1;
+    private int wallDir = 1;
 
     public MovementState State { get => state; set => state = value; }
     public GrowShrinkState GrowShrinkState { get => growShrinkState; set => growShrinkState = value; }
