@@ -43,18 +43,23 @@ public class PickUp : MonoBehaviour
             if (type == Type.CheshireCat || type == Type.MadHatter || type == Type.PlayingCard || type == Type.PocketWatch || type == Type.Teapot)
             {
                 PlayerPrefs.SetString(type.ToString(), "True");
+                SoundManager.Instance.PlaySFX(type.ToString());
             }
-            if(type == Type.GrowingPotion)
+            else
             {
-                other.gameObject.GetComponent<PlayerController>().CanGrow = true;
-            }
-            if(type == Type.ShrinkingPotion)
-            {
-                other.gameObject.GetComponent<PlayerController>().CanShrink = true;
-            }
-            if(type == Type.HookShot)
-            {
-                other.gameObject.GetComponent<PlayerController>().CanHookshot = true;
+                if (type == Type.GrowingPotion)
+                {
+                    other.gameObject.GetComponent<PlayerController>().CanGrow = true;
+                }
+                if (type == Type.ShrinkingPotion)
+                {
+                    other.gameObject.GetComponent<PlayerController>().CanShrink = true;
+                }
+                if (type == Type.HookShot)
+                {
+                    other.gameObject.GetComponent<PlayerController>().CanHookshot = true;
+                }
+                SoundManager.Instance.PlaySFX("Item");
             }
             Destroy(gameObject);
         }

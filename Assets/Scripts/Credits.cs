@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Credits : MonoBehaviour
 {
@@ -28,5 +29,10 @@ public class Credits : MonoBehaviour
             count++;
         }
         completedText.text = "In your journey to have tea with the Queen of Hearts, you found " + count + " of 5 secrets.";
+    }
+
+    public void QuitToMain()
+    {
+        SceneManager.LoadScene(0);
     }
 }

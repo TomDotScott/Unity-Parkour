@@ -14,7 +14,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private GameObject pausedMenu;
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject levelCompleteMenu;
-    [SerializeField] private Transform killBox;
     [SerializeField] private TextMeshProUGUI secondsTimer;
 
     private PlayerInput playerInput;
@@ -106,6 +105,11 @@ public class GameManager : Singleton<GameManager>
         secondsTimer.gameObject.SetActive(!secondsTimer.gameObject.activeSelf);
         pausedMenu.SetActive(!pausedMenu.activeSelf);
         isPaused = !isPaused;
+        //hide the options menu too if it's open
+        if (pausedMenu.transform.parent.Find("OptionsMenu").gameObject.activeSelf)
+        {
+            pausedMenu.transform.parent.Find("OptionsMenu").gameObject.SetActive(false);
+        }
     }
 
     private void CheckIfPlayerDead()

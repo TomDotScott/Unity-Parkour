@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Menus : MonoBehaviour
 {
     public Animator animator;
-
+    [SerializeField] private GameObject optionsMenu = null;
 
     private void Update()
     {
@@ -14,6 +14,17 @@ public class Menus : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Confined;
             Debug.Log("PAUSED");
+        }
+    }
+
+    private void Awake()
+    {
+        if(this.transform.name == "GameOverMenu")
+        {
+            SoundManager.Instance.PlaySFX("GameOver");
+        }else if(this.transform.name == "LevelCompleteMenu")
+        {
+            SoundManager.Instance.PlaySFX("LevelComplete");
         }
     }
 
@@ -52,6 +63,11 @@ public class Menus : MonoBehaviour
     {
         Debug.Log("QUIT GAME");
         Application.Quit();
+    }
+
+    public void ShowHideOptions()
+    {
+        optionsMenu.SetActive(!optionsMenu.activeSelf);
     }
 
     public bool AnimatorIsPlaying()
