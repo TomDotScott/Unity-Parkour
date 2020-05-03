@@ -82,15 +82,15 @@ public class SoundManager : Singleton<SoundManager>
     /// <summary>
     /// Plays an sfx sound
     /// </summary>
-    /// <param name="name">The name of the sound file</param>
-    public void PlaySFX(string name)
+    /// <param name="trackName">The name of the sound file</param>
+    public void PlaySFX(string trackName)
     {
         StopSFX();
         //Plays the clip once
-        sfxSource.PlayOneShot(sfxClips[name]);
+        sfxSource.PlayOneShot(sfxClips[trackName]);
     }
 
-    public void StopSFX()
+    private void StopSFX()
     {
         sfxSource.Stop();
     }
@@ -123,41 +123,39 @@ public class SoundManager : Singleton<SoundManager>
     {
         //Loads the sfx volume
         sfxSource.volume = PlayerPrefs.GetFloat("SFX", 0.75f);
-        //Loads the muisc volumes
+        //Loads the music volumes
         musicSource.volume = PlayerPrefs.GetFloat("Music", 0.5f);
 
         //Updates the sliders
-        if (musicSlider)
-        {
-            musicSlider.value = musicSource.volume;
-            sfxSlider.value = sfxSource.volume;
-        }
+        if (!musicSlider) return;
+        musicSlider.value = musicSource.volume;
+        sfxSlider.value = sfxSource.volume;
     }
 
     private void ObservePlayer()
     {
         switch (player.State)
         {
-            case PlayerStates.MovementState.moving:
+            case PlayerStates.MovementState.Moving:
                 playedJumpSound = false;
                 break;
-            case PlayerStates.MovementState.sliding:
-                if (lastPlayerState != PlayerStates.MovementState.sliding)
+            case PlayerStates.MovementState.Sliding:
+                if (lastPlayerState != PlayerStates.MovementState.Sliding)
                 {
                     PlaySFX("Slide");
                     playedJumpSound = false;
 
                 }
                 break;
-            case PlayerStates.MovementState.vaulting:
-                if (lastPlayerState != PlayerStates.MovementState.vaulting)
+            case PlayerStates.MovementState.Vaulting:
+                if (lastPlayerState != PlayerStates.MovementState.Vaulting)
                 {
-                    PlaySFX(string.Format("Vault{0}", Random.Range(1, 4).ToString()));
+                    PlaySFX($"Vault{Random.Range(1, 4).ToString()}");
                     playedJumpSound = false;
                 }
                 break;
-            case PlayerStates.MovementState.hookShotThrowing:
-                if (lastPlayerState != PlayerStates.MovementState.hookShotThrowing)
+            case PlayerStates.MovementState.HookShotThrowing:
+                if (lastPlayerState != PlayerStates.MovementState.HookShotThrowing)
                 {
                     PlaySFX("Hookshot");
                     playedJumpSound = false;
@@ -168,17 +166,17 @@ public class SoundManager : Singleton<SoundManager>
         //Prevent the jump noise playing more than once
         if (player.playerInput.Jump() && !playedJumpSound)
         {
-            PlaySFX(string.Format("Jump{0}", Random.Range(1, 5).ToString()));
+            PlaySFX($"Jump{Random.Range(1, 5).ToString()}");
             playedJumpSound = true;
         }
 
         if (player.GrowShrinkState.ToString().Contains("growing"))
         {
-            PlaySFX(string.Format("Growing{0}", Random.Range(1, 7).ToString()));
+            PlaySFX($"Growing{Random.Range(1, 7).ToString()}");
         }
         else if (player.GrowShrinkState.ToString().Contains("shrinking"))
         {
-            PlaySFX(string.Format("Shrinking{0}", Random.Range(1, 7)));
+            PlaySFX($"Shrinking{Random.Range(1, 7)}");
         }
         lastPlayerState = player.State;
     }

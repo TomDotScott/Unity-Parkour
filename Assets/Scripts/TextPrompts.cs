@@ -7,9 +7,10 @@ using UnityEngine;
 /// </summary>
 public class TextPrompts : MonoBehaviour
 {
-    private TextMesh textObject;
     [SerializeField] private float lifeTime;
     [SerializeField] private string textString;
+
+    private TextMesh textObject;
     private bool begin, complete;
     private float timer;
     private BoxCollider boxCollider;
@@ -58,7 +59,7 @@ public class TextPrompts : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
             begin = true;

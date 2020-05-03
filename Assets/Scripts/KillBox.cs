@@ -6,7 +6,7 @@ public class KillBox : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().IsDead = true;
         }

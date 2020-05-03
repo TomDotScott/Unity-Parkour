@@ -2,29 +2,28 @@
 {
     public enum MovementState
     {
-        idle,
-        moving,
-        jumping,
-        crouching,
-        sliding,
-        climbingLadder,
-        wallRunning,
-        grabbedLedge,
-        climbingLedge,
-        vaulting,
-        hookShotThrowing,
-        hookShotFlying
+        Idle,
+        Moving,
+        Crouching,
+        Sliding,
+        ClimbingLadder,
+        WallRunning,
+        GrabbedLedge,
+        ClimbingLedge,
+        Vaulting,
+        HookShotThrowing,
+        HookShotFlying
     }
 
     public enum GrowShrinkState
     {
-        growingToStandard,
-        growingToGiant,
-        giant,
-        shrinkingToStandard,
-        shrinkingToTiny,
-        tiny,
-        standard
+        GrowingToStandard,
+        GrowingToGiant,
+        Giant,
+        ShrinkingToStandard,
+        ShrinkingToTiny,
+        Tiny,
+        Standard
     }
 }
 

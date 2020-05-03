@@ -7,7 +7,7 @@ public class NextLevel : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.CompareTag("Player"))
         {
             GameManager.Instance.LevelComplete = true;
         }

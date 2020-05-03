@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    Vector2 mouseAbsolute;
-    Vector2 smoothMouse;
+    private Vector2 mouseAbsolute;
+    private Vector2 smoothMouse;
 
     public GameObject characterBody;
 
-    [SerializeField]
-    private Vector2 clampInDegrees = new Vector2(360, 180);
-    [SerializeField]
-    private Vector2 sensitivity = new Vector2(2, 2);
-    [SerializeField]
-    private Vector2 smoothing = new Vector2(3, 3);
-    [SerializeField]
-    private Vector2 targetDirection;
-    [SerializeField]
-    private Vector2 targetCharacterDirection;
+    [SerializeField] private Vector2 clampInDegrees = new Vector2(360, 180);
+    [SerializeField] private Vector2 sensitivity = new Vector2(2, 2);
+    [SerializeField] private Vector2 smoothing = new Vector2(3, 3);
+    [SerializeField] private Vector2 targetDirection;
+    [SerializeField] private Vector2 targetCharacterDirection;
 
     void Start()
     {
@@ -34,10 +29,11 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance.IsPaused || !GameManager.Instance.GameOver || GameManager.Instance.LevelComplete)
+        if (!GameManager.Instance.IsPaused || !GameManager.Instance.GameOver || !GameManager.Instance.LevelComplete)
         {
             // Ensure the cursor is always locked when set
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 
             // Allow the script to clamp based on a desired target value.
             var targetOrientation = Quaternion.Euler(targetDirection);
@@ -77,6 +73,7 @@ public class CameraMovement : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
         }
     }
 }

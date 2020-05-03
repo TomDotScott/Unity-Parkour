@@ -8,9 +8,9 @@ public class ShatterOnCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            if (other.gameObject.GetComponent<PlayerController>().GrowShrinkState == PlayerStates.GrowShrinkState.giant)
+            if (other.gameObject.GetComponent<PlayerController>().GrowShrinkState == PlayerStates.GrowShrinkState.Giant)
             {
                 Destroy(GameObject.Instantiate(replacement, transform.position, transform.rotation), 3f);
                 Destroy(gameObject);

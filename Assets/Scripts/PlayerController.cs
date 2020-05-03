@@ -12,10 +12,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask ladderLayer;
     [SerializeField] private LayerMask wallrunLayer;
 
-    [Header("Enum States")]
-    private MovementState state;
-    private GrowShrinkState growShrinkState;
-
     [Header("Hook Shot Mechanics")]
     [SerializeField] private Camera gameCamera = null;
     [SerializeField] private Transform hookShotTransform = null;
@@ -23,7 +19,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Growing and Shrinking Attributes")]
     [SerializeField] private float growthRate = 0;
-    [SerializeField] private float shrinkRate = 0;
     [SerializeField] private float standardSize = 0;
     [SerializeField] private float standardRadius = 0;
     [SerializeField] private float giantSize = 0;
@@ -49,9 +44,6 @@ public class PlayerController : MonoBehaviour
     private bool canGrabLedge;
 
     private bool canHookshot = false;
-    private bool canGrow = false;
-    private bool canShrink = false;
-    private bool isDead = false;
 
     private bool controlledSlide;
 
@@ -67,8 +59,10 @@ public class PlayerController : MonoBehaviour
 
     private int wallDir = 1;
 
-    public MovementState State { get => state; set => state = value; }
-    public GrowShrinkState GrowShrinkState { get => growShrinkState; set => growShrinkState = value; }
+    [field: Header("PlayerStates")] 
+    public MovementState State { get; private set; }
+
+    public GrowShrinkState GrowShrinkState { get; private set; }
 
     public bool CanHookshot
     {
@@ -80,9 +74,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool CanGrow { get => canGrow; set => canGrow = value; }
-    public bool CanShrink { get => canShrink; set => canShrink = value; }
-    public bool IsDead { get => isDead; set => isDead = value; }
+    public bool CanGrow { get; set; } = false;
+    public bool CanShrink { get; set; } = false;
+    public bool IsDead { get; set; } = false;
 
     private void Start()
     {
@@ -117,11 +111,11 @@ public class PlayerController : MonoBehaviour
 
 
             //Check for movement updates
-            if (GrowShrinkState == GrowShrinkState.standard)
+            if (GrowShrinkState == GrowShrinkState.Standard)
             {
                 CheckSliding();
                 CheckCrouching();
-                CheckForWallrun();
+                CheckForWallRun();
                 CheckLadderClimbing();
                 UpdateLedgeGrabbing();
                 CheckForVault();
@@ -133,12 +127,12 @@ public class PlayerController : MonoBehaviour
                 CheckHookShot();
             }
 
-            if (CanGrow || GrowShrinkState == GrowShrinkState.tiny)
+            if (CanGrow || GrowShrinkState == GrowShrinkState.Tiny)
             {
                 CheckForGrowing();
             }
 
-            if (CanShrink || GrowShrinkState == GrowShrinkState.giant)
+            if (CanShrink || GrowShrinkState == GrowShrinkState.Giant)
             {
                 CheckForShrinking();
             }
@@ -149,7 +143,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void UpdateInteraction()
+    private void UpdateInteraction()
     {
         if (!canInteract)
         {
@@ -166,36 +160,31 @@ public class PlayerController : MonoBehaviour
 
     void UpdateMovingStatus()
     {
-        if ((int)State <= 1)
+        if ((int) State > 1) return;
+        State = MovementState.Idle;
+        if (PlayerInput.GetInput().magnitude > 0.02f)
         {
-            State = MovementState.idle;
-            if (playerInput.GetInput().magnitude > 0.02f)
-            {
-                State = MovementState.moving;
-            }
+            State = MovementState.Moving;
         }
     }
 
     void UpdateLean()
     {
-        if (animateLean != null)
+        if (!animateLean) return;
+        Vector2 lean = Vector2.zero;
+        switch (State)
         {
-            Vector2 lean = Vector2.zero;
-            if (State == MovementState.wallRunning)
-            {
+            case MovementState.WallRunning:
                 lean.x = wallDir;
-            }
-
-            if (State == MovementState.sliding && controlledSlide)
-            {
+                break;
+            case MovementState.Sliding when controlledSlide:
                 lean.y = -1;
-            }
-            else if (State == MovementState.grabbedLedge || State == MovementState.vaulting)
-            {
+                break;
+            case MovementState.Vaulting:
                 lean.y = 1;
-            }
-            animateLean.SetLean(lean);
+                break;
         }
+        animateLean.SetLean(lean);
     }
     /*********************************************************************/
 
@@ -205,28 +194,28 @@ public class PlayerController : MonoBehaviour
     {
         switch (State)
         {
-            case MovementState.sliding:
+            case MovementState.Sliding:
                 SlideMovement();
                 break;
-            case MovementState.climbingLadder:
+            case MovementState.ClimbingLadder:
                 LadderMovement();
                 break;
-            case MovementState.grabbedLedge:
+            case MovementState.GrabbedLedge:
                 GrabbedLedgeMovement();
                 break;
-            case MovementState.climbingLedge:
+            case MovementState.ClimbingLedge:
                 ClimbLedgeMovement();
                 break;
-            case MovementState.wallRunning:
-                WallrunningMovement();
+            case MovementState.WallRunning:
+                WallRunningMovement();
                 break;
-            case MovementState.vaulting:
+            case MovementState.Vaulting:
                 VaultMovement();
                 break;
-            case MovementState.hookShotThrowing:
+            case MovementState.HookShotThrowing:
                 HookShotThrow();
                 break;
-            case MovementState.hookShotFlying:
+            case MovementState.HookShotFlying:
                 HookShotMovement();
                 break;
             default:
@@ -234,22 +223,22 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        if (GrowShrinkState != GrowShrinkState.standard && GrowShrinkState != GrowShrinkState.giant && GrowShrinkState != GrowShrinkState.tiny)
+        if (GrowShrinkState != GrowShrinkState.Standard && GrowShrinkState != GrowShrinkState.Giant && GrowShrinkState != GrowShrinkState.Tiny)
         {
             GrowShrinkAnimation();
         }
     }
 
-    void DefaultMovement()
+    private void DefaultMovement()
     {
-        if (playerInput.GetRun() && State == MovementState.crouching)
+        if (PlayerInput.GetRun() && State == MovementState.Crouching)
         {
             Uncrouch();
         }
-        movement.Move(playerInput.GetInput(), playerInput.GetRun(), (State == MovementState.crouching));
+        movement.Move(PlayerInput.GetInput(), PlayerInput.GetRun(), (State == MovementState.Crouching));
         if (movement.grounded && playerInput.Jump())
         {
-            if (State == MovementState.crouching)
+            if (State == MovementState.Crouching)
             {
                 Uncrouch();
             }
@@ -261,7 +250,7 @@ public class PlayerController : MonoBehaviour
     /*********************************************************************/
 
     /****************************** SLIDING ******************************/
-    void SlideMovement()
+    private void SlideMovement()
     {
         if (movement.grounded && playerInput.Jump())
         {
@@ -276,23 +265,21 @@ public class PlayerController : MonoBehaviour
         }
 
         movement.Move(slideDir, movement.slideSpeed, 1f);
-        if (slideTime <= 0)
+        if (slideTime > 0) return;
+        if (PlayerInput.GetCrouching())
         {
-            if (playerInput.GetCrouching())
-            {
-                Crouch();
-            }
-            else
-            {
-                Uncrouch();
-            }
+            Crouch();
+        }
+        else
+        {
+            Uncrouch();
         }
     }
 
-    void CheckSliding()
+    private void CheckSliding()
     {
         //Check to slide when running
-        if (playerInput.GetCrouch() && canSlide())
+        if (PlayerInput.GetCrouch() && CanSlide())
         {
             slideDir = transform.forward;
             movement.characterController.height = quarterHeight;
@@ -303,7 +290,7 @@ public class PlayerController : MonoBehaviour
         //Lower slidetime
         if (slideTime > 0)
         {
-            State = MovementState.sliding;
+            State = MovementState.Sliding;
             slideTime -= Time.deltaTime;
         }
 
@@ -316,19 +303,17 @@ public class PlayerController : MonoBehaviour
                 slideDir = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
                 Vector3.OrthoNormalize(ref hitNormal, ref slideDir);
                 controlledSlide = false;
-                State = MovementState.sliding;
+                State = MovementState.Sliding;
             }
         }
     }
 
-    bool canSlide()
+    private bool CanSlide()
     {
-        return !movement.grounded || playerInput.GetInput().magnitude <= 0.02f || !playerInput.GetRun()
-            ? false
-            : slideTime <= 0 && State != MovementState.sliding;
+        return movement.grounded && !(PlayerInput.GetInput().magnitude <= 0.02f) && PlayerInput.GetRun() && (slideTime <= 0 && State != MovementState.Sliding);
     }
 
-    bool CanFit(RaycastHit hit)
+    private bool CanFit(RaycastHit hit)
     {
         //Check above the point to make sure the player can fit
         return !Physics.SphereCast(hit.point + (Vector3.up * radius), radius, Vector3.up, out _, height - radius);
@@ -337,13 +322,13 @@ public class PlayerController : MonoBehaviour
     /*********************************************************************/
 
     /***************************** CROUCHING *****************************/
-    void CheckCrouching()
+    private void CheckCrouching()
     {
         if (movement.grounded && (int)State <= 2)
         {
-            if (playerInput.GetCrouch())
+            if (PlayerInput.GetCrouch())
             {
-                if (State != MovementState.crouching)
+                if (State != MovementState.Crouching)
                 {
                     Crouch();
                 }
@@ -355,23 +340,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Crouch()
+    private void Crouch()
     {
         movement.characterController.height = quarterHeight;
-        State = MovementState.crouching;
+        State = MovementState.Crouching;
     }
 
-    void Uncrouch()
+    private void Uncrouch()
     {
         movement.characterController.height = height;
-        State = MovementState.moving;
+        State = MovementState.Moving;
     }
     /*********************************************************************/
 
     /************************** LADDER CLIMBING **************************/
-    void LadderMovement()
+    private void LadderMovement()
     {
-        Vector3 input = playerInput.GetInput();
+        Vector3 input = PlayerInput.GetInput();
         Vector3 move = Vector3.Cross(Vector3.up, ladderNormal).normalized;
         move *= input.x;
         move.y = input.y * movement.walkSpeed;
@@ -382,12 +367,12 @@ public class PlayerController : MonoBehaviour
         {
             movement.Jump((-ladderNormal + Vector3.up * 2f).normalized, 1f);
             playerInput.ResetJump();
-            State = MovementState.moving;
+            State = MovementState.Moving;
         }
 
-        if (!hasObjectInfront(0.05f, ladderLayer) || goToGround)
+        if (!HasObjectInFront(0.05f, ladderLayer) || goToGround)
         {
-            State = MovementState.moving;
+            State = MovementState.Moving;
             Vector3 pushUp = ladderNormal;
             pushUp.y = 0.25f;
 
@@ -397,26 +382,25 @@ public class PlayerController : MonoBehaviour
             movement.Move(move, 1f, 0f);
     }
 
-    void CheckLadderClimbing()
+    private void CheckLadderClimbing()
     {
-        if (canInteract)
-        {
-            //Check for ladder all across player (so they cannot use the side)
-            bool right = Physics.Raycast(transform.position + (transform.right * halfradius), transform.forward, radius + 0.125f, ladderLayer);
-            bool left = Physics.Raycast(transform.position - (transform.right * halfradius), transform.forward, radius + 0.125f, ladderLayer);
+        if (!canInteract) return;
+        
+        //Check for ladder all across player (so they cannot use the side)
+        bool right = Physics.Raycast(transform.position + (transform.right * halfradius), transform.forward, radius + 0.125f, ladderLayer);
+        bool left = Physics.Raycast(transform.position - (transform.right * halfradius), transform.forward, radius + 0.125f, ladderLayer);
 
-            if (Physics.Raycast(transform.position, transform.forward, out var hit, radius + 0.125f, ladderLayer)
-                && right
-                && left)
+        if (Physics.Raycast(transform.position, transform.forward, out var hit, radius + 0.125f, ladderLayer)
+            && right
+            && left)
+        {
+            if (hit.normal == hit.transform.forward)
             {
-                if (hit.normal == hit.transform.forward)
+                ladderNormal = -hit.normal;
+                if (HasObjectInFront(0.05f, ladderLayer) && PlayerInput.GetInput().y > 0.02f)
                 {
-                    ladderNormal = -hit.normal;
-                    if (hasObjectInfront(0.05f, ladderLayer) && playerInput.GetInput().y > 0.02f)
-                    {
-                        canInteract = false;
-                        State = MovementState.climbingLadder;
-                    }
+                    canInteract = false;
+                    State = MovementState.ClimbingLadder;
                 }
             }
         }
@@ -424,9 +408,9 @@ public class PlayerController : MonoBehaviour
     /*********************************************************************/
 
     /**************************** WALLRUNNING ****************************/
-    void WallrunningMovement()
+    private void WallRunningMovement()
     {
-        Vector3 input = playerInput.GetInput();
+        Vector3 input = PlayerInput.GetInput();
         float speed = (input.y > 0) ? input.y : 0;
 
         Vector3 move = wallNormal * speed;
@@ -435,18 +419,18 @@ public class PlayerController : MonoBehaviour
         {
             movement.Jump(((Vector3.up * (speed + 0.5f)) + (wallNormal * 2f * speed) + (transform.right * -wallDir * 1.25f)).normalized, speed + 0.5f);
             playerInput.ResetJump();
-            State = MovementState.moving;
+            State = MovementState.Moving;
         }
 
         if (!HasWallToSide(wallDir) || movement.grounded)
         {
-            State = MovementState.moving;
+            State = MovementState.Moving;
         }
 
         movement.Move(move, movement.runSpeed, (1f - speed) + (speed / 4f));
     }
 
-    void CheckForWallrun()
+    private void CheckForWallRun()
     {
         if (canInteract && !movement.grounded && movement.moveDirection.y < 0)
         {
@@ -462,11 +446,11 @@ public class PlayerController : MonoBehaviour
 
             if (wall != 0)
             {
-                if (Physics.Raycast(transform.position + (transform.right * wall * radius), transform.right * wall, out var hit, halfradius, wallrunLayer))
+                if (Physics.Raycast(transform.position + (transform.right * (wall * radius)), transform.right * wall, out var hit, halfradius, wallrunLayer))
                 {
                     wallDir = wall;
                     wallNormal = Vector3.Cross(hit.normal, Vector3.up) * -wallDir;
-                    State = MovementState.wallRunning;
+                    State = MovementState.WallRunning;
                 }
             }
         }
@@ -475,7 +459,7 @@ public class PlayerController : MonoBehaviour
     bool HasWallToSide(int dir)
     {
         //Check for ladder in front of player
-        Vector3 top = transform.position + (transform.right * 0.25f * dir);
+        Vector3 top = transform.position + (transform.right * (0.25f * dir));
         Vector3 bottom = top - (transform.up * radius);
         top += transform.up * radius;
 
@@ -484,19 +468,19 @@ public class PlayerController : MonoBehaviour
     /*********************************************************************/
 
     /******************** LEDGE GRABBING AND CLIMBING ********************/
-    void GrabbedLedgeMovement()
+    private void GrabbedLedgeMovement()
     {
         if (playerInput.Jump())
         {
             movement.Jump((Vector3.up - transform.forward).normalized, 1f);
             playerInput.ResetJump();
-            State = MovementState.moving;
+            State = MovementState.Moving;
         }
 
         movement.Move(Vector3.zero, 0f, 0f); //Stay in place
     }
 
-    void ClimbLedgeMovement()
+    private void ClimbLedgeMovement()
     {
         Vector3 dir = pushFrom - transform.position;
         Vector3 right = Vector3.Cross(Vector3.up, dir).normalized;
@@ -505,11 +489,11 @@ public class PlayerController : MonoBehaviour
         movement.Move(move, movement.walkSpeed, 0f);
         if (new Vector2(dir.x, dir.z).magnitude < 0.125f)
         {
-            State = MovementState.idle;
+            State = MovementState.Idle;
         }
     }
 
-    void CheckLedgeGrab()
+    private void CheckLedgeGrab()
     {
         //Check for ledge to grab onto 
         Vector3 dir = transform.TransformDirection(new Vector3(0, -0.5f, 1).normalized);
@@ -532,19 +516,19 @@ public class PlayerController : MonoBehaviour
             if (!Physics.SphereCast(checkCollisions, radius, Vector3.up, out hit, height - radius))
             {
                 canInteract = false;
-                State = MovementState.grabbedLedge;
+                State = MovementState.GrabbedLedge;
             }
         }
     }
 
-    void UpdateLedgeGrabbing()
+    private void UpdateLedgeGrabbing()
     {
         if (movement.grounded || movement.moveDirection.y > 0)
         {
             canGrabLedge = true;
         }
 
-        if (State != MovementState.climbingLedge)
+        if (State != MovementState.ClimbingLedge)
         {
             if (canGrabLedge
                 && !movement.grounded
@@ -553,71 +537,69 @@ public class PlayerController : MonoBehaviour
                 CheckLedgeGrab();
             }
 
-            if (State == MovementState.grabbedLedge)
+            if (State == MovementState.GrabbedLedge)
             {
                 canGrabLedge = false;
                 Vector2 down = playerInput.GetDown();
                 if (down.y == -1)
-                    State = MovementState.moving;
+                    State = MovementState.Moving;
                 else if (down.y == 1)
-                    State = MovementState.climbingLedge;
+                    State = MovementState.ClimbingLedge;
             }
         }
     }
     /*********************************************************************/
 
     /***************************** VAULTING ******************************/
-    void VaultMovement()
+    private void VaultMovement()
     {
         Vector3 localPos = vaultHelper.transform.InverseTransformPoint(transform.position);
-        Vector3 move = (vaultDir + (Vector3.up * -(localPos.z - radius) * height)).normalized;
+        Vector3 move = (vaultDir + (Vector3.up * (-(localPos.z - radius) * height))).normalized;
 
         if (localPos.z > quarterHeight)
         {
             movement.characterController.height = height;
-            State = MovementState.moving;
+            State = MovementState.Moving;
         }
 
         movement.Move(move, movement.runSpeed, 0f);
     }
 
-    void CheckForVault()
+    private void CheckForVault()
     {
-        if (State != MovementState.vaulting)
+        if (State == MovementState.Vaulting) return;
+        float checkDis = 0.05f;
+        checkDis += (movement.characterController.velocity.magnitude / 16f); //Check farther if moving faster
+        if (HasObjectInFront(checkDis, vaultLayer) && playerInput.Jump()
+                                                   && Physics.SphereCast(transform.position + (transform.forward * (radius - 0.25f)), 0.25f, transform.forward, out var sphereHit, checkDis, vaultLayer)
+                                                   && Physics.SphereCast(sphereHit.point + (Vector3.up * quarterHeight), radius, Vector3.down, out var hit, quarterHeight - radius, vaultLayer)
+                                                   && CanFit(hit))
         {
-            float checkDis = 0.05f;
-            checkDis += (movement.characterController.velocity.magnitude / 16f); //Check farther if moving faster
-            if (hasObjectInfront(checkDis, vaultLayer) && playerInput.Jump()
-                && Physics.SphereCast(transform.position + (transform.forward * (radius - 0.25f)), 0.25f, transform.forward, out var sphereHit, checkDis, vaultLayer)
-                && Physics.SphereCast(sphereHit.point + (Vector3.up * quarterHeight), radius, Vector3.down, out var hit, quarterHeight - radius, vaultLayer)
-                && CanFit(hit))
-            {
 
-                vaultOver = hit.point;
-                vaultDir = transform.forward;
-                SetVaultHelper();
+            vaultOver = hit.point;
+            vaultDir = transform.forward;
+            SetVaultHelper();
 
-                canInteract = false;
-                State = MovementState.vaulting;
-                movement.characterController.height = radius;
-            }
+            canInteract = false;
+            State = MovementState.Vaulting;
+            movement.characterController.height = radius;
         }
     }
 
-    void CreateVaultHelper()
+    private void CreateVaultHelper()
     {
         vaultHelper = new GameObject();
         vaultHelper.transform.name = "Vault Helper";
     }
 
-    void SetVaultHelper()
+    private void SetVaultHelper()
     {
         vaultHelper.transform.position = vaultOver;
         vaultHelper.transform.rotation = Quaternion.LookRotation(vaultDir);
     }
     /*********************************************************************/
 
-    bool hasObjectInfront(float dis, LayerMask layer)
+    private bool HasObjectInFront(float dis, LayerMask layer)
     {
         Vector3 top = transform.position + (transform.forward * 0.25f);
         Vector3 bottom = top - (transform.up * quarterHeight);
@@ -643,19 +625,19 @@ public class PlayerController : MonoBehaviour
 
         if (hookShotSize >= Vector3.Distance(gameCamera.transform.position, hookShotPos))
         {
-            State = MovementState.hookShotFlying;
+            State = MovementState.HookShotFlying;
         }
     }
 
     private void CheckHookShot()
     {
-        if (playerInput.GetLeftClick()
+        if (PlayerInput.GetLeftClick()
             && Physics.Raycast(gameCamera.transform.position, gameCamera.transform.forward, out RaycastHit raycastHit)
             && Vector3.Distance(gameCamera.transform.position, raycastHit.point) <= 35)
         {
             //If we hit something within range....
             hookShotPos = raycastHit.point;
-            State = MovementState.hookShotThrowing;
+            State = MovementState.HookShotThrowing;
             hookShotSize = 0;
         }
     }
@@ -668,10 +650,10 @@ public class PlayerController : MonoBehaviour
         float distance = Vector3.Distance(gameCamera.transform.position, hookShotPos);
         float hookSpeed = distance * 10;
         movement.Move(hookShotDir, hookSpeed, 0);
-        if (distance <= 1 || playerInput.GetLeftClick())
+        if (distance <= 1 || PlayerInput.GetLeftClick())
         {
             hookShotTransform.gameObject.SetActive(false);
-            State = MovementState.moving;
+            State = MovementState.Moving;
         }
     }
 
@@ -681,30 +663,30 @@ public class PlayerController : MonoBehaviour
 
     private void CheckForGrowing()
     {
-        if (playerInput.GetGrowButton())
+        if (PlayerInput.GetGrowButton())
         {
-            if (GrowShrinkState == GrowShrinkState.tiny)
+            if (GrowShrinkState == GrowShrinkState.Tiny)
             {
-                GrowShrinkState = GrowShrinkState.growingToStandard;
+                GrowShrinkState = GrowShrinkState.GrowingToStandard;
             }
-            if (GrowShrinkState == GrowShrinkState.standard)
+            if (GrowShrinkState == GrowShrinkState.Standard)
             {
-                GrowShrinkState = GrowShrinkState.growingToGiant;
+                GrowShrinkState = GrowShrinkState.GrowingToGiant;
             }
         }
     }
 
     private void CheckForShrinking()
     {
-        if (playerInput.GetShrinkButton())
+        if (PlayerInput.GetShrinkButton())
         {
-            if (GrowShrinkState == GrowShrinkState.giant)
+            if (GrowShrinkState == GrowShrinkState.Giant)
             {
-                GrowShrinkState = GrowShrinkState.shrinkingToStandard;
+                GrowShrinkState = GrowShrinkState.ShrinkingToStandard;
             }
-            if (GrowShrinkState == GrowShrinkState.standard)
+            if (GrowShrinkState == GrowShrinkState.Standard)
             {
-                GrowShrinkState = GrowShrinkState.shrinkingToTiny;
+                GrowShrinkState = GrowShrinkState.ShrinkingToTiny;
             }
         }
     }
@@ -713,47 +695,47 @@ public class PlayerController : MonoBehaviour
     {
         switch (GrowShrinkState)
         {
-            case GrowShrinkState.growingToStandard:
+            case GrowShrinkState.GrowingToStandard:
 
                 movement.characterController.height = Mathf.Clamp(movement.characterController.height + growthRate * Time.deltaTime, tinySize, standardSize);
                 movement.characterController.radius = Mathf.Clamp(movement.characterController.radius + growthRate * Time.deltaTime, tinyRadius, standardRadius);
 
                 if (movement.characterController.height == standardSize)
                 {
-                    GrowShrinkState = GrowShrinkState.standard;
+                    GrowShrinkState = GrowShrinkState.Standard;
                     movement.SetStandard();
                 }
                 break;
-            case GrowShrinkState.growingToGiant:
+            case GrowShrinkState.GrowingToGiant:
 
                 movement.characterController.height = Mathf.Clamp(movement.characterController.height + growthRate * Time.deltaTime, standardSize, giantSize);
                 movement.characterController.radius = Mathf.Clamp(movement.characterController.radius + growthRate * Time.deltaTime, standardRadius, giantRadius);
 
                 if (movement.characterController.height == giantSize)
                 {
-                    GrowShrinkState = GrowShrinkState.giant;
+                    GrowShrinkState = GrowShrinkState.Giant;
                     movement.SetGiant();
                 }
                 break;
-            case GrowShrinkState.shrinkingToStandard:
+            case GrowShrinkState.ShrinkingToStandard:
 
                 movement.characterController.height = Mathf.Clamp(movement.characterController.height - growthRate * Time.deltaTime, standardSize, giantSize);
                 movement.characterController.radius = Mathf.Clamp(movement.characterController.radius - growthRate * Time.deltaTime, standardRadius, giantRadius);
 
                 if (movement.characterController.height == standardSize)
                 {
-                    GrowShrinkState = GrowShrinkState.standard;
+                    GrowShrinkState = GrowShrinkState.Standard;
                     movement.SetStandard();
                 }
                 break;
-            case GrowShrinkState.shrinkingToTiny:
+            case GrowShrinkState.ShrinkingToTiny:
 
                 movement.characterController.height = Mathf.Clamp(movement.characterController.height - growthRate * Time.deltaTime, tinySize, standardSize);
                 movement.characterController.radius = Mathf.Clamp(movement.characterController.radius - growthRate * Time.deltaTime, tinyRadius, standardRadius);
 
                 if (movement.characterController.height == tinySize)
                 {
-                    GrowShrinkState = GrowShrinkState.tiny;
+                    GrowShrinkState = GrowShrinkState.Tiny;
                     movement.SetTiny();
                 }
                 break;

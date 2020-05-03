@@ -6,13 +6,15 @@ public class AnimateLean : MonoBehaviour
 {
     public float lerpSpeed = 0.125f;
 
-    Vector2 lean;
-    Vector2 actualLean;
-    Animator ani;
+    private Vector2 lean;
+    private Vector2 actualLean;
+    private Animator animator;
+    private static readonly int X = Animator.StringToHash("x");
+    private static readonly int Y = Animator.StringToHash("y");
 
-    private void Start()
+    void Start()
     {
-        ani = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -27,15 +29,12 @@ public class AnimateLean : MonoBehaviour
             actualLean.y = Mathf.Lerp(actualLean.y, lean.y, lerpSpeed);
         }
 
-        ani.SetFloat("x", actualLean.x);
-        ani.SetFloat("y", actualLean.y);
+        animator.SetFloat(X, actualLean.x);
+        animator.SetFloat(Y, actualLean.y);
     }
 
     public void SetLean(Vector2 set)
     {
-        if (lean != set)
-        {
-            lean = set;
-        }
+        lean = set;
     }
 }

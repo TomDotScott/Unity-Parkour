@@ -33,14 +33,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float tinyJumpSpeed;
 
     [HideInInspector] public Vector3 moveDirection = Vector3.zero;
-    [HideInInspector] public Vector3 contactPoint;
     [HideInInspector] public CharacterController characterController;
-    [HideInInspector] public bool playerControl = false;
 
     [Header("Other Values")]
     [SerializeField] private float gravity = 20.0f;
     [SerializeField] private float antiBumpFactor = .75f;
-    public bool grounded = false;
+    public bool grounded;
     public Vector3 jump = Vector3.zero;
 
     private RaycastHit hit;
@@ -122,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(Vector3 dir, float mult) => jump = dir * mult;
 
-    public void UpdateJump()
+    private void UpdateJump()
     {
         if (jump != Vector3.zero)
         {

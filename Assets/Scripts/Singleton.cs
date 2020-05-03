@@ -9,7 +9,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     /// <summary>
     /// The instance of the singleton
     /// </summary>
-    private static T instance;
+    private static T _instance;
 
     /// <summary>
     /// Property for accessing the singleton
@@ -18,14 +18,13 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            if (instance == null) //If the instance is null then we need to find it
+            if (!_instance) //If the instance is null then we need to find it
             {
                 //Finds the object
-                instance = FindObjectOfType<T>();
+                _instance = FindObjectOfType<T>();
             }
             //Returns the instance
-            return instance;
+            return _instance;
         }
-
     }
 }

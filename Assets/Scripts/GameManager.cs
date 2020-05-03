@@ -29,28 +29,28 @@ public class GameManager : Singleton<GameManager>
     public bool GameOver { get => gameOver; set => gameOver = value; }
     public bool LevelComplete
     {
-        get => levelComplete; set
+        get => levelComplete; 
+        
+        set
         {
             levelComplete = value;
-            if (value)
+            if (!value) return;
+            levelCompleteMenu.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = "Score: " + SecondsToMinutesAndSeconds(score);
+            string levelName = "Level" + SceneManager.GetActiveScene().buildIndex.ToString();
+
+
+            //If the score is greater than the saved score then we have set a new highscore!
+            float highScore = PlayerPrefs.GetFloat(levelName, 10000);
+            if (highScore > score)
             {
-                levelCompleteMenu.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = "Score: " + SecondsToMinutesAndSeconds(score);
-                string levelName = "Level" + SceneManager.GetActiveScene().buildIndex.ToString();
-
-
-                //If the score is greater than the saved score then we have set a new highscore!
-                float highScore = PlayerPrefs.GetFloat(levelName, 10000);
-                if (highScore > score)
-                {
-                    Debug.Log("IT'S A NEW HIGHSCORE");
-                    PlayerPrefs.SetFloat(levelName, score);
-                    highScore = score;
-                }
-
-
-                levelCompleteMenu.transform.Find("HighScore").GetComponent<TextMeshProUGUI>().text = "HighScore: " + SecondsToMinutesAndSeconds(highScore);
-                levelCompleteMenu.SetActive(true);
+                Debug.Log("IT'S A NEW HIGHSCORE");
+                PlayerPrefs.SetFloat(levelName, score);
+                highScore = score;
             }
+
+
+            levelCompleteMenu.transform.Find("HighScore").GetComponent<TextMeshProUGUI>().text = "HighScore: " + SecondsToMinutesAndSeconds(highScore);
+            levelCompleteMenu.SetActive(true);
         }
     }
 
@@ -94,7 +94,7 @@ public class GameManager : Singleton<GameManager>
 
     private void CheckInput()
     {
-        if (playerInput.GetPaused())
+        if (PlayerInput.GetPaused())
         {
             PauseUnpause();
         }

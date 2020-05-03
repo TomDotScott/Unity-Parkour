@@ -14,19 +14,16 @@ public class PickUp : MonoBehaviour
 
     private Vector3 startPosition;
 
-    private float bob = 10f;
-
     private void Start()
     {
         startPosition = transform.position;
         //If a hidden item, check it hasn't already been collected
-        if (type == Type.CheshireCat || type == Type.MadHatter || type == Type.PlayingCard || type == Type.PocketWatch || type == Type.Teapot)
+        if (type != Type.CheshireCat && type != Type.MadHatter && type != Type.PlayingCard &&
+            type != Type.PocketWatch && type != Type.Teapot) return;
+        if (PlayerPrefs.GetString(type.ToString(), "False") != "False")
         {
-            if (PlayerPrefs.GetString(type.ToString(), "False") != "False")
-            {
-                //Delete the object because it has already been collected
-                Destroy(gameObject);
-            }
+            //Delete the object because it has already been collected
+            Destroy(gameObject);
         }
     }
 
@@ -38,30 +35,28 @@ public class PickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (!other.gameObject.CompareTag("Player")) return;
+        if (type == Type.CheshireCat || type == Type.MadHatter || type == Type.PlayingCard || type == Type.PocketWatch || type == Type.Teapot)
         {
-            if (type == Type.CheshireCat || type == Type.MadHatter || type == Type.PlayingCard || type == Type.PocketWatch || type == Type.Teapot)
-            {
-                PlayerPrefs.SetString(type.ToString(), "True");
-                SoundManager.Instance.PlaySFX(type.ToString());
-            }
-            else
-            {
-                if (type == Type.GrowingPotion)
-                {
-                    other.gameObject.GetComponent<PlayerController>().CanGrow = true;
-                }
-                if (type == Type.ShrinkingPotion)
-                {
-                    other.gameObject.GetComponent<PlayerController>().CanShrink = true;
-                }
-                if (type == Type.HookShot)
-                {
-                    other.gameObject.GetComponent<PlayerController>().CanHookshot = true;
-                }
-                SoundManager.Instance.PlaySFX("Item");
-            }
-            Destroy(gameObject);
+            PlayerPrefs.SetString(type.ToString(), "True");
+            SoundManager.Instance.PlaySFX(type.ToString());
         }
+        else
+        {
+            switch (type)
+            {
+                case Type.GrowingPotion:
+                    other.gameObject.GetComponent<PlayerController>().CanGrow = true;
+                    break;
+                case Type.ShrinkingPotion:
+                    other.gameObject.GetComponent<PlayerController>().CanShrink = true;
+                    break;
+                case Type.HookShot:
+                    other.gameObject.GetComponent<PlayerController>().CanHookshot = true;
+                    break;
+            }
+            SoundManager.Instance.PlaySFX("Item");
+        }
+        Destroy(gameObject);
     }
 }

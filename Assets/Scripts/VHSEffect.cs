@@ -8,8 +8,11 @@ public class VHSEffect : MonoBehaviour
 
     private float scanLineY;
     private float scanLineX;
-    private Material material = null;
+    private Material material;
     private VideoPlayer videoPlayer;
+    private static readonly int VhsTex = Shader.PropertyToID("_VHSTex");
+    private static readonly int YScanline = Shader.PropertyToID("_yScanline");
+    private static readonly int XScanline = Shader.PropertyToID("_xScanline");
 
     void Start()
     {
@@ -22,9 +25,9 @@ public class VHSEffect : MonoBehaviour
         videoPlayer.Play();
     }
 
-    void OnRenderImage(RenderTexture source, RenderTexture destination)
+    private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        material.SetTexture("_VHSTex", videoPlayer.texture);
+        material.SetTexture(VhsTex, videoPlayer.texture);
 
         scanLineY += Time.deltaTime * 0.01f;
         scanLineX -= Time.deltaTime * 0.1f;
@@ -37,8 +40,8 @@ public class VHSEffect : MonoBehaviour
         {
             scanLineX = Random.value;
         }
-        material.SetFloat("_yScanline", scanLineY);
-        material.SetFloat("_xScanline", scanLineX);
+        material.SetFloat(YScanline, scanLineY);
+        material.SetFloat(XScanline, scanLineX);
         Graphics.Blit(source, destination, material);
     }
 

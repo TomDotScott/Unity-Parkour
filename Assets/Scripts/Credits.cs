@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 public class Credits : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI completedText;
+    int count = 0;
     
     // Start is called before the first frame update
     void Start()
     {
-        int count = 0;
         if(PlayerPrefs.GetString("MadHatter") == "True")
         {
             count++;
