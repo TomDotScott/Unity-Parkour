@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShatterOnCollision : MonoBehaviour
 {
-    [SerializeField] private GameObject replacement;
+    [SerializeField] private GameObject replacement = null;
 
     private void OnTriggerEnter(Collider other)
     {

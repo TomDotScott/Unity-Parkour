@@ -13,7 +13,7 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     private AudioSource musicSource;
 
-    [SerializeField] private List<AudioClip> soundtrack;
+    [SerializeField] private List<AudioClip> soundtrack = null;
 
     /// <summary>
     /// A reference to the sfx Audiosource
@@ -25,12 +25,12 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     private Dictionary<string, AudioClip> sfxClips = new Dictionary<string, AudioClip>();
 
-    [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider musicSlider = null;
+    [SerializeField] private Slider sfxSlider = null;
 
-    [SerializeField] private PlayerController player;
+    [SerializeField] private PlayerController player = null;
 
-    private PlayerStates.MovementState lastPlayerState;
+    private PlayerStates.MovementState lastPlayerState = PlayerStates.MovementState.Idle;
 
     private bool playedJumpSound = false;
 

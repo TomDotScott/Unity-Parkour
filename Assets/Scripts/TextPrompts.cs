@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class TextPrompts : MonoBehaviour
 {
-    [SerializeField] private float lifeTime;
-    [SerializeField] private string textString;
+    [SerializeField] private float lifeTime = 0f;
+    [SerializeField] private string textString = "";
 
     private TextMesh textObject;
     private bool begin, complete;

@@ -10,16 +10,16 @@ using System;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private GameObject pausedMenu;
-    [SerializeField] private GameObject gameOverMenu;
-    [SerializeField] private GameObject levelCompleteMenu;
-    [SerializeField] private TextMeshProUGUI secondsTimer;
+    [SerializeField] private GameObject player = null;
+    [SerializeField] private GameObject pausedMenu = null;
+    [SerializeField] private GameObject gameOverMenu = null;
+    [SerializeField] private GameObject levelCompleteMenu = null;
+    [SerializeField] private TextMeshProUGUI secondsTimer = null;
 
     private PlayerInput playerInput;
     private PlayerController playerController;
 
-    private float score;
+    private float score = 0;
 
     private bool isPaused;
     private bool gameOver;
@@ -90,6 +90,7 @@ public class GameManager : Singleton<GameManager>
         CheckInput();
         //Only pause the game after the animation is finished
         Time.timeScale = (isPaused && !pausedMenu.GetComponent<Menus>().AnimatorIsPlaying()) ? 0f : 1f;
+        isPaused = pausedMenu.activeSelf;
     }
 
     private void CheckInput()
@@ -104,7 +105,7 @@ public class GameManager : Singleton<GameManager>
     {
         secondsTimer.gameObject.SetActive(!secondsTimer.gameObject.activeSelf);
         pausedMenu.SetActive(!pausedMenu.activeSelf);
-        isPaused = !isPaused;
+        //isPaused = !isPaused;
         //hide the options menu too if it's open
         if (pausedMenu.transform.parent.Find("OptionsMenu").gameObject.activeSelf)
         {

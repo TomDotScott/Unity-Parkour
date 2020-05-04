@@ -29,11 +29,11 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance.IsPaused || !GameManager.Instance.GameOver || !GameManager.Instance.LevelComplete)
+        if (!GameManager.Instance.IsPaused && !GameManager.Instance.GameOver && !GameManager.Instance.LevelComplete)
         {
             // Ensure the cursor is always locked when set
-            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
 
             // Allow the script to clamp based on a desired target value.
             var targetOrientation = Quaternion.Euler(targetDirection);
@@ -72,8 +72,9 @@ public class CameraMovement : MonoBehaviour
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
+        
     }
 }

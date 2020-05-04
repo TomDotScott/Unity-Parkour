@@ -5,32 +5,32 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Current Values")]
-    public float walkSpeed;
-    public float runSpeed;
-    public float slideSpeed;
-    public float crouchSpeed;
-    [SerializeField] private float jumpSpeed;
+    public float walkSpeed = 0;
+    public float runSpeed = 0;
+    public float slideSpeed = 0;
+    public float crouchSpeed = 0;
+    [SerializeField] private float jumpSpeed = 0;
     
     [Header("Standard Values")]
-    public float standardWalkSpeed;
-    public float standardRunSpeed;
-    public float standardSlideSpeed;
-    public float standardCrouchSpeed;
-    [SerializeField] private float standardJumpSpeed;
+    public float standardWalkSpeed = 0;
+    public float standardRunSpeed = 0;
+    public float standardSlideSpeed = 0;
+    public float standardCrouchSpeed = 0;
+    [SerializeField] private float standardJumpSpeed = 0;
 
     [Header("Giant Values")]
-    public float giantWalkSpeed;
-    public float giantRunSpeed;
-    public float giantSlideSpeed;
-    public float giantCrouchSpeed;
-    [SerializeField] private float giantJumpSpeed;
+    public float giantWalkSpeed = 0;
+    public float giantRunSpeed = 0;
+    public float giantSlideSpeed = 0;
+    public float giantCrouchSpeed = 0;
+    [SerializeField] private float giantJumpSpeed = 0;
 
     [Header("Tiny Values")]
-    public float tinyWalkSpeed;
-    public float tinyRunSpeed;
-    public float tinySlideSpeed;
-    public float tinyCrouchSpeed;
-    [SerializeField] private float tinyJumpSpeed;
+    public float tinyWalkSpeed = 0;
+    public float tinyRunSpeed = 0;
+    public float tinySlideSpeed = 0;
+    public float tinyCrouchSpeed = 0;
+    [SerializeField] private float tinyJumpSpeed = 0;
 
     [HideInInspector] public Vector3 moveDirection = Vector3.zero;
     [HideInInspector] public CharacterController characterController;
