@@ -11,6 +11,7 @@ public class PickUp : MonoBehaviour
     }
 
     [SerializeField] private Type type;
+    [SerializeField] private TextMesh text;
 
     private Vector3 startPosition;
 
@@ -33,12 +34,41 @@ public class PickUp : MonoBehaviour
         transform.Rotate(new Vector3(0f, 50f, 0f) * Time.deltaTime);
     }
 
+    private int SecretCount()
+    {
+        int count = 0; 
+        if (PlayerPrefs.GetString("MadHatter") == "True")
+        {
+            count++;
+        }
+        if (PlayerPrefs.GetString("Teapot") == "True")
+        {
+            count++;
+        }
+        if (PlayerPrefs.GetString("PlayingCard") == "True")
+        {
+            count++;
+        }
+        if (PlayerPrefs.GetString("CheshireCat") == "True")
+        {
+            count++;
+        }
+        return count;
+    }
+
+    private void RewardPrompt()
+    {
+        //work out how many secrets the player found
+        text.text = "You have found " + SecretCount() + " of 5 Secrets"; 
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("Player")) return;
         if (type == Type.CheshireCat || type == Type.MadHatter || type == Type.PlayingCard || type == Type.PocketWatch || type == Type.Teapot)
         {
             PlayerPrefs.SetString(type.ToString(), "True");
+            RewardPrompt();
             SoundManager.Instance.PlaySFX(type.ToString());
         }
         else
